@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CV Generator PRO \u2014 Buat CV Profesional</title>
+<title>CV Generator PRO — Buat CV Profesional</title>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Fraunces:ital,wght@0,700;0,900;1,700&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <style>
 
 /* ==============================
-   CSS VARIABLES \u2014 selaras landing
+   CSS VARIABLES — selaras landing
    ============================== */
 :root {
   --bg:        #f9f7f4;
@@ -29,7 +29,7 @@
   --success:   #22c55e;
   --preview-bg:#e8e4df;
   --shadow:    0 2px 16px rgba(26,23,20,0.08);
-  --shadow-lg: 0 8px 32px rgba(26,23,20,0.13);
+  --shadow-lg: 0 8px 40px rgba(26,23,20,0.15);
 }
 
 [data-theme="dark"] {
@@ -50,11 +50,11 @@
   --success:   #34d399;
   --preview-bg:#0a0908;
   --shadow:    0 2px 16px rgba(0,0,0,0.4);
-  --shadow-lg: 0 8px 32px rgba(0,0,0,0.5);
+  --shadow-lg: 0 8px 40px rgba(0,0,0,0.55);
 }
 
 /* ==============================
-   RESET
+   RESET & BASE
    ============================== */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -78,74 +78,68 @@ body {
    LEFT PANEL
    ============================== */
 .form-panel {
-  width: 380px;
-  min-width: 380px;
-  background: var(--panel);
-  border-right: 1px solid var(--border);
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-  overflow: hidden;
+  width: 380px; min-width: 380px;
+  background: var(--panel); border-right: 1px solid var(--border);
+  display: flex; flex-direction: column; height: 100vh; overflow: hidden;
   transition: background 0.3s, border-color 0.3s;
 }
 
 /* Header */
 .panel-header {
-  padding: 16px 20px 14px;
-  border-bottom: 1px solid var(--border);
-  background: var(--panel);
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
+  padding: 14px 18px; border-bottom: 1px solid var(--border);
+  background: var(--panel); flex-shrink: 0;
+  display: flex; align-items: center; justify-content: space-between; gap: 8px;
 }
 
 .panel-logo {
-  display: flex; align-items: center; gap: 9px;
-  font-family: 'Fraunces', serif; font-size: 17px; font-weight: 900;
+  display: flex; align-items: center; gap: 8px;
+  font-family: 'Fraunces', serif; font-size: 16px; font-weight: 900;
   color: var(--text); text-decoration: none; white-space: nowrap;
 }
 .panel-logo-icon {
-  width: 32px; height: 32px; border-radius: 9px;
+  width: 30px; height: 30px; border-radius: 8px;
   background: linear-gradient(135deg, var(--primary), #f5a623);
   display: flex; align-items: center; justify-content: center;
-  font-size: 16px; flex-shrink: 0;
+  font-size: 15px; flex-shrink: 0;
 }
 .panel-logo span { color: var(--primary); }
 
-.panel-header-actions { display: flex; align-items: center; gap: 8px; }
+.panel-header-right { display: flex; align-items: center; gap: 7px; }
 
-/* Theme toggle button */
 .btn-theme {
-  width: 34px; height: 34px; border-radius: 50%;
+  padding: 0 10px; height: 32px; border-radius: 8px;
   background: var(--bg3); border: 1px solid var(--border);
-  cursor: pointer; font-size: 16px;
+  cursor: pointer; font-size: 10px; font-weight: 700;
   display: flex; align-items: center; justify-content: center;
   transition: all 0.2s; flex-shrink: 0; color: var(--text);
+  font-family: 'Sora', sans-serif; white-space: nowrap;
 }
 .btn-theme:hover { background: var(--primary-l); border-color: var(--primary); }
 
-/* Back to landing */
 .btn-back {
-  padding: 6px 12px;
-  background: var(--bg3); border: 1px solid var(--border);
-  border-radius: 8px; font-family: 'Sora', sans-serif;
-  font-size: 11px; font-weight: 600; color: var(--text2);
+  padding: 5px 11px; background: var(--bg3); border: 1px solid var(--border);
+  border-radius: 7px; font-family: 'Sora', sans-serif;
+  font-size: 10.5px; font-weight: 600; color: var(--text2);
   cursor: pointer; transition: all 0.2s; white-space: nowrap;
-  text-decoration: none; display: inline-flex; align-items: center; gap: 4px;
+  text-decoration: none; display: inline-flex; align-items: center; gap: 3px;
 }
 .btn-back:hover { color: var(--primary); border-color: var(--primary); background: var(--primary-l); }
 
 /* Progress */
 .panel-progress {
-  padding: 10px 20px 12px;
-  border-bottom: 1px solid var(--border);
+  padding: 9px 18px 11px; border-bottom: 1px solid var(--border);
   flex-shrink: 0; background: var(--panel);
 }
-.progress-label { display: flex; justify-content: space-between; font-size: 10px; color: var(--muted); margin-bottom: 5px; font-weight: 600; }
+.progress-label {
+  display: flex; justify-content: space-between;
+  font-size: 10px; color: var(--muted); margin-bottom: 5px; font-weight: 600;
+}
 .progress { height: 5px; background: var(--border); border-radius: 10px; }
-.progress-bar { height: 100%; width: 0%; background: linear-gradient(90deg, var(--primary), #f5a623); border-radius: 10px; transition: width 0.4s ease; }
+.progress-bar {
+  height: 100%; width: 0%;
+  background: linear-gradient(90deg, var(--primary), #f5a623);
+  border-radius: 10px; transition: width 0.4s ease;
+}
 
 /* Tabs */
 .tabs {
@@ -153,9 +147,9 @@ body {
   flex-shrink: 0; overflow-x: auto; background: var(--panel);
 }
 .tab-btn {
-  flex: 1; min-width: 56px; padding: 9px 4px;
+  flex: 1; min-width: 52px; padding: 9px 3px;
   background: none; border: none; color: var(--muted);
-  font-family: 'Sora', sans-serif; font-size: 9.5px; font-weight: 700;
+  font-family: 'Sora', sans-serif; font-size: 9px; font-weight: 700;
   cursor: pointer; border-bottom: 2px solid transparent;
   transition: all 0.2s; text-transform: uppercase; letter-spacing: 0.4px;
 }
@@ -163,25 +157,24 @@ body {
 .tab-btn:hover:not(.active) { color: var(--text); }
 
 /* Form scroll */
-.form-scroll { overflow-y: auto; flex: 1; padding: 16px 18px 28px; }
+.form-scroll { overflow-y: auto; flex: 1; padding: 15px 16px 28px; }
 .tab-section { display: none; }
 .tab-section.active { display: block; }
 
-/* Section title inside form */
+/* Section label */
 .sec-label {
-  font-size: 11px; font-weight: 700;
-  text-transform: uppercase; letter-spacing: 1px;
-  color: var(--primary); margin-bottom: 12px; padding-bottom: 7px;
-  border-bottom: 1px solid var(--border);
-  display: flex; align-items: center; gap: 6px;
+  font-size: 10.5px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 1px; color: var(--primary); margin-bottom: 11px;
+  padding-bottom: 7px; border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 5px;
 }
 
-/* Field */
-.field-group { margin-bottom: 12px; }
+/* Fields */
+.field-group { margin-bottom: 11px; }
 .field-label {
-  display: block; font-size: 10px; font-weight: 700;
+  display: block; font-size: 9.5px; font-weight: 700;
   color: var(--muted); text-transform: uppercase;
-  letter-spacing: 0.6px; margin-bottom: 5px;
+  letter-spacing: 0.6px; margin-bottom: 4px;
 }
 
 input[type="text"],
@@ -190,113 +183,105 @@ input[type="tel"],
 input[type="date"],
 select,
 textarea {
-  width: 100%;
-  padding: 8px 11px;
-  background: var(--bg3);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  color: var(--text);
-  font-family: 'Sora', sans-serif;
-  font-size: 13px;
-  outline: none;
-  transition: border-color 0.2s, box-shadow 0.2s, background 0.3s;
+  width: 100%; padding: 8px 10px;
+  background: var(--bg3); border: 1px solid var(--border);
+  border-radius: 7px; color: var(--text);
+  font-family: 'Sora', sans-serif; font-size: 12.5px;
+  outline: none; transition: border-color 0.2s, box-shadow 0.2s, background 0.3s;
 }
 input:focus, select:focus, textarea:focus {
   border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(232,96,28,0.12);
+  box-shadow: 0 0 0 3px rgba(232,96,28,0.11);
   background: var(--bg2);
 }
-textarea { resize: vertical; min-height: 88px; }
-textarea.large { min-height: 128px; }
+textarea { resize: vertical; min-height: 86px; }
+textarea.large { min-height: 120px; }
 select {
   appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='7' viewBox='0 0 10 7'%3E%3Cpath fill='%238a837a' d='M0 0l5 7 5-7z'/%3E%3C/svg%3E");
-  background-repeat: no-repeat; background-position: right 11px center; cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath fill='%238a837a' d='M0 0l5 6 5-6z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 10px center; cursor: pointer;
 }
-
-.row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; }
+.row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 
 /* Buttons */
 .btn {
   display: inline-flex; align-items: center; gap: 5px;
-  padding: 7px 13px; border: none; border-radius: 8px;
+  padding: 7px 12px; border: none; border-radius: 7px;
   cursor: pointer; font-family: 'Sora', sans-serif;
-  font-size: 11.5px; font-weight: 700; transition: all 0.2s;
+  font-size: 11px; font-weight: 700; transition: all 0.2s;
 }
 .btn-primary { background: var(--primary); color: white; }
-.btn-primary:hover { background: var(--primary-d); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(232,96,28,0.3); }
+.btn-primary:hover { background: var(--primary-d); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(232,96,28,0.28); }
 .btn-danger { background: var(--danger); color: white; }
 .btn-danger:hover { background: #dc2626; }
 .btn-ghost { background: var(--bg3); color: var(--text2); border: 1px solid var(--border); }
 .btn-ghost:hover { border-color: var(--primary); color: var(--primary); background: var(--primary-l); }
-.btn-sm { padding: 4px 9px; font-size: 10.5px; }
+.btn-sm { padding: 4px 9px; font-size: 10px; }
 
 .btn-add {
-  width: 100%; padding: 9px;
-  background: transparent; border: 1.5px dashed var(--border);
-  border-radius: 8px; color: var(--muted);
-  font-family: 'Sora', sans-serif; font-size: 11.5px; font-weight: 700;
-  cursor: pointer; transition: all 0.2s; margin-top: 6px;
+  width: 100%; padding: 8px; background: transparent;
+  border: 1.5px dashed var(--border); border-radius: 7px;
+  color: var(--muted); font-family: 'Sora', sans-serif;
+  font-size: 11px; font-weight: 700; cursor: pointer; transition: all 0.2s; margin-top: 5px;
 }
 .btn-add:hover { border-color: var(--primary); color: var(--primary); background: var(--primary-l); }
 
 /* Item cards */
 .item-card {
   background: var(--bg3); border: 1px solid var(--border);
-  border-radius: 10px; padding: 12px; margin-bottom: 9px;
+  border-radius: 9px; padding: 11px; margin-bottom: 8px;
 }
 .item-card-header {
-  display: flex; justify-content: space-between; align-items: center;
-  margin-bottom: 10px;
+  display: flex; justify-content: space-between; align-items: center; margin-bottom: 9px;
 }
-.item-card-title { font-size: 11px; font-weight: 700; color: var(--primary); }
+.item-card-title { font-size: 10.5px; font-weight: 700; color: var(--primary); }
 
-/* Photo upload */
-.photo-upload-wrap { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; }
+/* Photo */
+.photo-upload-wrap { display: flex; align-items: center; gap: 12px; margin-bottom: 13px; }
 .photo-preview {
-  width: 68px; height: 68px; border-radius: 50%;
+  width: 64px; height: 64px; border-radius: 50%;
   background: var(--bg3); border: 2px dashed var(--border);
   display: flex; align-items: center; justify-content: center;
   overflow: hidden; flex-shrink: 0; cursor: pointer; transition: border-color 0.2s;
 }
 .photo-preview:hover { border-color: var(--primary); }
 .photo-preview img { width: 100%; height: 100%; object-fit: cover; }
-.photo-upload-info { font-size: 11px; color: var(--muted); margin-top: 4px; }
+.photo-upload-info { font-size: 10.5px; color: var(--muted); margin-top: 4px; }
 
 /* Template grid */
-.template-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; }
+.template-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 .template-card {
-  border: 2px solid var(--border); border-radius: 10px; padding: 9px;
+  border: 2px solid var(--border); border-radius: 9px; padding: 8px;
   cursor: pointer; transition: all 0.2s; text-align: center; background: var(--bg3);
 }
-.template-card:hover { border-color: var(--primary); background: var(--primary-l); }
-.template-card.selected { border-color: var(--primary); background: var(--primary-l); }
-.template-thumb {
-  height: 64px; border-radius: 6px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 20px; margin-bottom: 5px;
+.template-card:hover, .template-card.selected {
+  border-color: var(--primary); background: var(--primary-l);
 }
-.template-name { font-size: 10.5px; font-weight: 700; color: var(--text); }
-.template-desc { font-size: 9.5px; color: var(--muted); margin-top: 1px; }
+.template-thumb {
+  height: 60px; border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 19px; margin-bottom: 5px;
+}
+.template-name { font-size: 10px; font-weight: 700; color: var(--text); }
+.template-desc { font-size: 9px; color: var(--muted); margin-top: 1px; }
 
 /* Skill badge */
 .skill-badge {
   display: inline-flex; align-items: center; gap: 4px;
-  padding: 3px 9px; background: var(--primary-l);
-  border: 1px solid rgba(232,96,28,0.25);
-  border-radius: 20px; font-size: 11px; color: var(--primary);
+  padding: 3px 8px; background: var(--primary-l);
+  border: 1px solid rgba(232,96,28,0.22);
+  border-radius: 20px; font-size: 10.5px; color: var(--primary);
   margin: 2px; cursor: default;
 }
-.skill-badge .del { cursor: pointer; opacity: 0.6; font-size: 13px; line-height: 1; }
+.skill-badge .del { cursor: pointer; opacity: 0.55; font-size: 13px; line-height: 1; }
 .skill-badge .del:hover { opacity: 1; color: var(--danger); }
 .skill-input-row { display: flex; gap: 6px; }
 
 /* Control bar */
 .control-bar {
-  display: flex; gap: 7px; flex-wrap: wrap;
-  padding: 12px 18px; border-top: 1px solid var(--border);
-  background: var(--panel); flex-shrink: 0;
-  align-items: center;
+  display: flex; gap: 6px; flex-wrap: wrap;
+  padding: 11px 16px; border-top: 1px solid var(--border);
+  background: var(--panel); flex-shrink: 0; align-items: center;
 }
 
 /* ==============================
@@ -310,21 +295,18 @@ select {
 }
 
 #cv-wrapper {
-  background: white;
-  width: 794px; min-height: 1123px;
-  box-shadow: var(--shadow-lg);
-  transform-origin: top center;
-  flex-shrink: 0;
+  background: white; width: 794px; min-height: 1123px;
+  box-shadow: var(--shadow-lg); transform-origin: top center; flex-shrink: 0;
 }
 
 /* ==============================
-   CV TEMPLATES (output \u2014 always light)
+   CV TEMPLATES (output — always white)
    ============================== */
 
 /* MODERN */
 .cv-modern{color:#1e293b;font-family:'Sora',sans-serif;}
 .cv-modern .cv-header{background:linear-gradient(135deg,#e8601c,#f5a623);color:white;padding:30px 38px;display:flex;gap:22px;align-items:center;}
-.cv-modern .cv-photo{width:86px;height:86px;border-radius:50%;border:3px solid rgba(255,255,255,0.4);overflow:hidden;flex-shrink:0;}
+.cv-modern .cv-photo{width:84px;height:84px;border-radius:50%;border:3px solid rgba(255,255,255,0.4);overflow:hidden;flex-shrink:0;}
 .cv-modern .cv-photo img{width:100%;height:100%;object-fit:cover;}
 .cv-modern .cv-name{font-size:24px;font-weight:800;letter-spacing:-0.5px;}
 .cv-modern .cv-title{font-size:13px;opacity:0.88;margin-top:4px;}
@@ -378,13 +360,13 @@ select {
 /* CLASSIC */
 .cv-classic{color:#2d2d2d;font-family:'Sora',sans-serif;}
 .cv-classic .cv-header{background:#1e293b;color:white;padding:26px 34px;display:flex;gap:18px;align-items:center;}
-.cv-classic .cv-photo{width:82px;height:82px;border-radius:8px;overflow:hidden;border:2px solid rgba(255,255,255,0.2);flex-shrink:0;}
+.cv-classic .cv-photo{width:80px;height:80px;border-radius:8px;overflow:hidden;border:2px solid rgba(255,255,255,0.2);flex-shrink:0;}
 .cv-classic .cv-photo img{width:100%;height:100%;object-fit:cover;}
 .cv-classic .cv-name{font-size:22px;font-weight:800;}
 .cv-classic .cv-title{font-size:12px;color:#94a3b8;margin-top:3px;}
 .cv-classic .cv-contact{display:flex;flex-wrap:wrap;gap:10px;margin-top:7px;font-size:10px;color:#cbd5e1;}
 .cv-classic .cv-body{display:flex;}
-.cv-classic .cv-left{width:195px;background:#f8f6f4;padding:18px;border-right:1px solid #e0dbd4;}
+.cv-classic .cv-left{width:192px;background:#f8f6f4;padding:18px;border-right:1px solid #e0dbd4;}
 .cv-classic .cv-right{flex:1;padding:20px 24px;}
 .cv-classic .sec-title{font-size:9.5px;font-weight:800;text-transform:uppercase;letter-spacing:1.5px;color:#1e293b;margin-bottom:9px;padding-bottom:3px;border-bottom:2px solid #1e293b;}
 .cv-classic .sec-block{margin-bottom:16px;}
@@ -406,7 +388,7 @@ select {
 .cv-professional{color:#1e293b;font-family:'Sora',sans-serif;}
 .cv-professional .cv-header{padding:28px 38px;background:#0f172a;color:white;display:flex;justify-content:space-between;align-items:center;gap:18px;}
 .cv-professional .cv-left-head{flex:1;}
-.cv-professional .cv-photo{width:82px;height:82px;border-radius:50%;overflow:hidden;border:3px solid #e8601c;flex-shrink:0;}
+.cv-professional .cv-photo{width:80px;height:80px;border-radius:50%;overflow:hidden;border:3px solid #e8601c;flex-shrink:0;}
 .cv-professional .cv-photo img{width:100%;height:100%;object-fit:cover;}
 .cv-professional .cv-name{font-size:24px;font-weight:800;}
 .cv-professional .cv-title{font-size:12px;color:#94a3b8;margin-top:3px;}
@@ -415,9 +397,9 @@ select {
 .cv-professional .cv-stripe{height:4px;background:linear-gradient(90deg,#e8601c,#f5a623,#22c55e);}
 .cv-professional .cv-body{display:flex;}
 .cv-professional .cv-main{flex:1;padding:20px 26px;}
-.cv-professional .cv-sidebar{width:205px;padding:20px 16px;background:#faf9f7;border-left:1px solid #ede9e4;}
+.cv-professional .cv-sidebar{width:203px;padding:20px 16px;background:#faf9f7;border-left:1px solid #ede9e4;}
 .cv-professional .sec-title{font-size:9.5px;font-weight:800;text-transform:uppercase;letter-spacing:1.5px;color:#e8601c;margin-bottom:11px;display:flex;align-items:center;gap:7px;}
-.cv-professional .sec-title::before{content:'';width:12px;height:12px;background:#e8601c;border-radius:3px;flex-shrink:0;}
+.cv-professional .sec-title::before{content:'';width:11px;height:11px;background:#e8601c;border-radius:3px;flex-shrink:0;}
 .cv-professional .sec-block{margin-bottom:18px;}
 .cv-professional .exp-block{margin-bottom:12px;padding:10px;background:#faf9f7;border-radius:7px;border-left:3px solid #e8601c;}
 .cv-professional .exp-title{font-size:12px;font-weight:700;}
@@ -435,7 +417,7 @@ select {
 /* MINIMAL */
 .cv-minimal{color:#18181b;font-family:'Sora',sans-serif;}
 .cv-minimal .cv-header{padding:38px 48px 22px;border-bottom:1px solid #e4e4e7;}
-.cv-minimal .cv-photo{width:68px;height:68px;border-radius:50%;overflow:hidden;float:right;margin-left:14px;border:1px solid #e4e4e7;}
+.cv-minimal .cv-photo{width:66px;height:66px;border-radius:50%;overflow:hidden;float:right;margin-left:14px;border:1px solid #e4e4e7;}
 .cv-minimal .cv-photo img{width:100%;height:100%;object-fit:cover;}
 .cv-minimal .cv-name{font-size:28px;font-weight:800;letter-spacing:-1px;}
 .cv-minimal .cv-title{font-size:13px;color:#71717a;margin-top:3px;}
@@ -459,18 +441,16 @@ select {
 .cv-creative{color:#1e1b4b;font-family:'Sora',sans-serif;}
 .cv-creative .cv-header{background:linear-gradient(135deg,#1a1714 55%,#2d1a0a);color:white;padding:26px 34px;position:relative;overflow:hidden;}
 .cv-creative .cv-header::before{content:'';position:absolute;top:-50px;right:-50px;width:180px;height:180px;border-radius:50%;background:rgba(232,96,28,0.18);}
-.cv-creative .cv-header::after{content:'';position:absolute;bottom:-30px;left:90px;width:110px;height:110px;border-radius:50%;background:rgba(245,166,35,0.1);}
+.cv-creative .cv-header::after{content:'';position:absolute;bottom:-30px;left:90px;width:110px;height:110px;border-radius:50%;background:rgba(245,166,35,0.12);}
 .cv-creative .cv-top{display:flex;align-items:center;gap:18px;position:relative;z-index:1;}
-.cv-creative .cv-photo{width:82px;height:82px;border-radius:10px;overflow:hidden;border:2px solid rgba(232,96,28,0.5);flex-shrink:0;}
+.cv-creative .cv-photo{width:80px;height:80px;border-radius:10px;overflow:hidden;border:2px solid rgba(232,96,28,0.5);flex-shrink:0;}
 .cv-creative .cv-photo img{width:100%;height:100%;object-fit:cover;}
 .cv-creative .cv-name{font-size:24px;font-weight:800;}
 .cv-creative .cv-title{font-size:12px;color:#fbbf88;margin-top:3px;}
-.cv-creative .cv-tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:7px;}
-.cv-creative .cv-tag{font-size:9.5px;padding:2px 9px;background:rgba(232,96,28,0.25);border-radius:20px;color:#fdd5b0;}
 .cv-creative .cv-contact-bar{display:flex;flex-wrap:wrap;gap:14px;margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.15);font-size:10px;color:#fbbf88;position:relative;z-index:1;}
 .cv-creative .cv-body{display:flex;}
 .cv-creative .cv-main{flex:1;padding:20px 26px;}
-.cv-creative .cv-sidebar{width:205px;padding:20px 16px;background:#fdf8f4;}
+.cv-creative .cv-sidebar{width:203px;padding:20px 16px;background:#fdf8f4;}
 .cv-creative .sec-title{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:#c44e14;margin-bottom:10px;padding-bottom:5px;border-bottom:2px solid #fff0e8;}
 .cv-creative .sec-block{margin-bottom:18px;}
 .cv-creative .exp-block{margin-bottom:12px;}
@@ -489,23 +469,23 @@ select {
 /* EXECUTIVE */
 .cv-executive{color:#1e293b;font-family:'Sora',sans-serif;}
 .cv-executive .cv-header{background:#0f172a;color:white;padding:0;display:flex;}
-.cv-executive .cv-head-left{background:linear-gradient(135deg,#1e1208,#0f172a);padding:26px 22px;width:230px;flex-shrink:0;display:flex;flex-direction:column;align-items:center;text-align:center;}
-.cv-executive .cv-photo{width:86px;height:86px;border-radius:50%;overflow:hidden;border:3px solid rgba(232,96,28,0.4);margin-bottom:11px;}
+.cv-executive .cv-head-left{background:linear-gradient(135deg,#1e1208,#0f172a);padding:26px 22px;width:228px;flex-shrink:0;display:flex;flex-direction:column;align-items:center;text-align:center;}
+.cv-executive .cv-photo{width:84px;height:84px;border-radius:50%;overflow:hidden;border:3px solid rgba(232,96,28,0.4);margin-bottom:11px;}
 .cv-executive .cv-photo img{width:100%;height:100%;object-fit:cover;}
 .cv-executive .cv-name{font-size:16px;font-weight:800;line-height:1.2;}
-.cv-executive .cv-title{font-size:10px;color:#94a3b8;margin-top:5px;text-transform:uppercase;letter-spacing:1px;}
-.cv-executive .cv-head-right{flex:1;padding:26px 26px;}
+.cv-executive .cv-title{font-size:9.5px;color:#94a3b8;margin-top:5px;text-transform:uppercase;letter-spacing:1px;}
+.cv-executive .cv-head-right{flex:1;padding:24px 24px;}
 .cv-executive .ring-text{font-size:11px;color:#cbd5e1;line-height:1.7;}
 .cv-executive .cv-stats{display:flex;margin-top:14px;border-top:1px solid rgba(255,255,255,0.1);padding-top:14px;}
 .cv-executive .cv-stat{flex:1;text-align:center;border-right:1px solid rgba(255,255,255,0.1);}
 .cv-executive .cv-stat:last-child{border-right:none;}
 .cv-executive .cv-stat-num{font-size:18px;font-weight:800;color:white;}
 .cv-executive .cv-stat-label{font-size:9px;color:#94a3b8;text-transform:uppercase;letter-spacing:0.5px;}
-.cv-executive .cv-contact-strip{background:#1e293b;padding:7px 26px;display:flex;gap:18px;flex-wrap:wrap;border-top:2px solid #e8601c;}
+.cv-executive .cv-contact-strip{background:#1e293b;padding:7px 24px;display:flex;gap:16px;flex-wrap:wrap;border-top:2px solid #e8601c;}
 .cv-executive .cv-contact-strip span{font-size:10px;color:#94a3b8;}
 .cv-executive .cv-body{display:flex;}
-.cv-executive .cv-left{width:230px;padding:18px;background:#f8f6f4;border-right:1px solid #e0dbd4;flex-shrink:0;}
-.cv-executive .cv-right{flex:1;padding:18px 24px;}
+.cv-executive .cv-left{width:228px;padding:18px;background:#f8f6f4;border-right:1px solid #e0dbd4;flex-shrink:0;}
+.cv-executive .cv-right{flex:1;padding:18px 22px;}
 .cv-executive .sec-title{font-size:9.5px;font-weight:800;text-transform:uppercase;letter-spacing:1.5px;color:#0f172a;margin-bottom:9px;padding-bottom:4px;border-bottom:2px solid #0f172a;}
 .cv-executive .sec-block{margin-bottom:16px;}
 .cv-executive .exp-block{margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid #f0ece8;}
@@ -527,19 +507,17 @@ select {
 <!-- =========== LEFT PANEL =========== -->
 <div class="form-panel">
 
-  <!-- Header -->
   <div class="panel-header">
     <a href="landing.html" class="panel-logo">
-      <div class="panel-logo-icon">\ud83d\udcc4</div>
+      <div class="panel-logo-icon" style="font-size:13px;font-weight:900;color:white;letter-spacing:-0.5px;">CV</div>
       CV Generator<span>PRO</span>
     </a>
-    <div class="panel-header-actions">
-      <button class="btn-theme" id="themeToggle" title="Ganti Tema">\ud83c\udf19</button>
-      <a href="landing.html" class="btn-back">\u2190 Beranda</a>
+    <div class="panel-header-right">
+      <button class="btn-theme" id="themeToggle" title="Ganti Tema">Gelap</button>
+      <a href="landing.html" class="btn-back">Beranda</a>
     </div>
   </div>
 
-  <!-- Progress -->
   <div class="panel-progress">
     <div class="progress-label">
       <span>Kelengkapan CV</span>
@@ -548,25 +526,22 @@ select {
     <div class="progress"><div class="progress-bar" id="progressBar"></div></div>
   </div>
 
-  <!-- Tabs -->
   <div class="tabs">
-    <button class="tab-btn active" onclick="switchTab('info',this)">\ud83d\udc64 Info</button>
-    <button class="tab-btn" onclick="switchTab('exp',this)">\ud83d\udcbc Karir</button>
-    <button class="tab-btn" onclick="switchTab('edu',this)">\ud83c\udf93 Edu</button>
-    <button class="tab-btn" onclick="switchTab('skills',this)">\u26a1 Skill</button>
-    <button class="tab-btn" onclick="switchTab('template',this)">\ud83c\udfa8 Tema</button>
+    <button class="tab-btn active" onclick="switchTab('info',this)">Info</button>
+    <button class="tab-btn" onclick="switchTab('exp',this)">Karir</button>
+    <button class="tab-btn" onclick="switchTab('edu',this)">Edu</button>
+    <button class="tab-btn" onclick="switchTab('skills',this)">Skill</button>
+    <button class="tab-btn" onclick="switchTab('template',this)">Tema</button>
   </div>
 
-  <!-- Form scroll -->
   <div class="form-scroll">
 
-    <!-- TAB: INFO -->
+    <!-- INFO -->
     <div class="tab-section active" id="tab-info">
-      <div class="sec-label">\ud83d\udccb Informasi Pribadi</div>
-
+      <div class="sec-label">Informasi Pribadi</div>
       <div class="photo-upload-wrap">
         <div class="photo-preview" id="photoPreview" onclick="document.getElementById('fotoInput').click()">
-          <span style="font-size:22px;color:var(--muted);">\ud83d\udcf7</span>
+          <span style="font-size:13px;font-weight:700;color:var(--muted);">FOTO</span>
         </div>
         <div>
           <button class="btn btn-ghost btn-sm" onclick="document.getElementById('fotoInput').click()">Upload Foto</button>
@@ -575,374 +550,387 @@ select {
       </div>
       <input type="file" id="fotoInput" accept="image/*" style="display:none">
 
-      <div class="field-group">
-        <label class="field-label">Nama Lengkap</label>
-        <input type="text" id="nama" placeholder="Masukkan nama lengkap" oninput="liveUpdate()">
-      </div>
-      <div class="field-group">
-        <label class="field-label">Tanggal Lahir</label>
-        <input type="date" id="tglLahir" oninput="liveUpdate()">
-      </div>
-      <div class="field-group">
-        <label class="field-label">Email</label>
-        <input type="email" id="email" placeholder="email@contoh.com" oninput="liveUpdate()">
-      </div>
-      <div class="field-group">
-        <label class="field-label">Nomor HP</label>
-        <input type="tel" id="telepon" placeholder="+62 812 xxxx xxxx" oninput="liveUpdate()">
-      </div>
-      <div class="field-group">
-        <label class="field-label">Kota Asal</label>
-        <input type="text" id="kota" placeholder="Jakarta, Surabaya, ..." oninput="liveUpdate()">
-      </div>
-      <div class="field-group">
-        <label class="field-label">LinkedIn / Portofolio</label>
-        <input type="text" id="linkedin" placeholder="linkedin.com/in/username" oninput="liveUpdate()">
-      </div>
-      <div class="field-group">
-        <label class="field-label">Posisi yang Dilamar</label>
-        <input type="text" id="posisi" placeholder="Software Engineer, Designer, ..." oninput="liveUpdate()">
-      </div>
-      <div class="field-group">
-        <label class="field-label">Ringkasan Diri</label>
-        <textarea class="large" id="ringkasan" placeholder="Ceritakan dirimu: pengalaman, keahlian, dan nilai yang kamu tawarkan..." oninput="liveUpdate()"></textarea>
-      </div>
+      <div class="field-group"><label class="field-label">Nama Lengkap</label>
+        <input type="text" id="nama" placeholder="Masukkan nama lengkap" oninput="liveUpdate()"></div>
+      <div class="field-group"><label class="field-label">Tanggal Lahir</label>
+        <input type="date" id="tglLahir" oninput="liveUpdate()"></div>
+      <div class="field-group"><label class="field-label">Email</label>
+        <input type="email" id="email" placeholder="email@contoh.com" oninput="liveUpdate()"></div>
+      <div class="field-group"><label class="field-label">Nomor HP</label>
+        <input type="tel" id="telepon" placeholder="+62 812 xxxx xxxx" oninput="liveUpdate()"></div>
+      <div class="field-group"><label class="field-label">Kota Asal</label>
+        <input type="text" id="kota" placeholder="Jakarta, Surabaya, ..." oninput="liveUpdate()"></div>
+      <div class="field-group"><label class="field-label">LinkedIn / Portofolio</label>
+        <input type="text" id="linkedin" placeholder="linkedin.com/in/username" oninput="liveUpdate()"></div>
+      <div class="field-group"><label class="field-label">Posisi yang Dilamar</label>
+        <input type="text" id="posisi" placeholder="Software Engineer, Designer, ..." oninput="liveUpdate()"></div>
+      <div class="field-group"><label class="field-label">Ringkasan Diri</label>
+        <textarea class="large" id="ringkasan" placeholder="Ceritakan dirimu: pengalaman, keahlian, dan nilai yang kamu tawarkan..." oninput="liveUpdate()"></textarea></div>
     </div>
 
-    <!-- TAB: EXPERIENCE -->
+    <!-- EXPERIENCE -->
     <div class="tab-section" id="tab-exp">
-      <div class="sec-label">\ud83d\udcbc Pengalaman Kerja</div>
+      <div class="sec-label">Pengalaman Kerja</div>
       <div id="experience-list"></div>
       <button class="btn-add" onclick="addExperience()">+ Tambah Pengalaman Kerja</button>
     </div>
 
-    <!-- TAB: EDUCATION -->
+    <!-- EDUCATION -->
     <div class="tab-section" id="tab-edu">
-      <div class="sec-label">\ud83c\udf93 Pendidikan</div>
+      <div class="sec-label">Pendidikan</div>
       <div id="education-list"></div>
       <button class="btn-add" onclick="addEducation()">+ Tambah Pendidikan</button>
 
-      <div class="sec-label" style="margin-top:18px;">\ud83c\udf10 Bahasa</div>
+      <div class="sec-label" style="margin-top:18px;">Bahasa</div>
       <div id="language-list"></div>
       <button class="btn-add" onclick="addLanguage()">+ Tambah Bahasa</button>
 
-      <div class="sec-label" style="margin-top:18px;">\ud83c\udfc6 Sertifikasi (Opsional)</div>
+      <div class="sec-label" style="margin-top:18px;">Sertifikasi (Opsional)</div>
       <div id="cert-list"></div>
       <button class="btn-add" onclick="addCert()">+ Tambah Sertifikasi</button>
     </div>
 
-    <!-- TAB: SKILLS -->
+    <!-- SKILLS -->
     <div class="tab-section" id="tab-skills">
-      <div class="sec-label">\u26a1 Keahlian / Skill</div>
+      <div class="sec-label">Keahlian / Skill</div>
       <div class="skill-input-row">
         <input type="text" id="skillInput" placeholder="Tambah skill lalu Enter..." onkeydown="if(event.key==='Enter')addSkill()">
-        <button class="btn btn-primary btn-sm" onclick="addSkill()">\uff0b</button>
+        <button class="btn btn-primary btn-sm" onclick="addSkill()">+</button>
       </div>
       <div id="skill-tags" style="margin-top:10px;"></div>
     </div>
 
-    <!-- TAB: TEMPLATE -->
+    <!-- TEMPLATE -->
     <div class="tab-section" id="tab-template">
-      <div class="sec-label">\ud83c\udfa8 Pilih Template</div>
-      <div class="template-grid" id="templateGrid">
+      <div class="sec-label">Pilih Template</div>
+      <div class="template-grid">
         <div class="template-card selected" onclick="selectTemplate('modern',this)">
-          <div class="template-thumb" style="background:linear-gradient(135deg,#e8601c,#f5a623);">\u2728</div>
-          <div class="template-name">Modern</div>
-          <div class="template-desc">Sidebar oranye</div>
+          <div class="template-thumb" style="background:linear-gradient(135deg,#e8601c,#f5a623);color:white;font-size:11px;font-weight:800;">Modern</div>
+          <div class="template-name">Modern</div><div class="template-desc">Sidebar oranye</div>
         </div>
         <div class="template-card" onclick="selectTemplate('formal',this)">
-          <div class="template-thumb" style="background:linear-gradient(135deg,#1a1a2e,#16213e);">\ud83c\udfa9</div>
-          <div class="template-name">Formal</div>
-          <div class="template-desc">Elegan & resmi</div>
+          <div class="template-thumb" style="background:linear-gradient(135deg,#1a1a2e,#16213e);color:white;font-size:11px;font-weight:800;">Formal</div>
+          <div class="template-name">Formal</div><div class="template-desc">Elegan &amp; resmi</div>
         </div>
         <div class="template-card" onclick="selectTemplate('classic',this)">
-          <div class="template-thumb" style="background:linear-gradient(135deg,#1e293b,#334155);">\ud83d\udccb</div>
-          <div class="template-name">Classic</div>
-          <div class="template-desc">Sidebar gelap</div>
+          <div class="template-thumb" style="background:linear-gradient(135deg,#1e293b,#334155);color:white;font-size:11px;font-weight:800;">Classic</div>
+          <div class="template-name">Classic</div><div class="template-desc">Sidebar gelap</div>
         </div>
         <div class="template-card" onclick="selectTemplate('professional',this)">
-          <div class="template-thumb" style="background:linear-gradient(135deg,#0f172a,#e8601c);">\ud83d\udcbc</div>
-          <div class="template-name">Professional</div>
-          <div class="template-desc">Aksen oranye</div>
+          <div class="template-thumb" style="background:linear-gradient(135deg,#0f172a,#e8601c);color:white;font-size:11px;font-weight:800;">Pro</div>
+          <div class="template-name">Professional</div><div class="template-desc">Aksen oranye</div>
         </div>
         <div class="template-card" onclick="selectTemplate('minimal',this)">
-          <div class="template-thumb" style="background:linear-gradient(135deg,#f8f6f4,#e0dbd4);">\u2b1c</div>
-          <div class="template-name">Minimal</div>
-          <div class="template-desc">Bersih & simple</div>
+          <div class="template-thumb" style="background:linear-gradient(135deg,#f8f6f4,#e0dbd4);color:#4a4540;font-size:11px;font-weight:800;">Minimal</div>
+          <div class="template-name">Minimal</div><div class="template-desc">Bersih &amp; simple</div>
         </div>
         <div class="template-card" onclick="selectTemplate('creative',this)">
-          <div class="template-thumb" style="background:linear-gradient(135deg,#1a1714,#c44e14);">\ud83c\udfa8</div>
-          <div class="template-name">Creative</div>
-          <div class="template-desc">Oranye ekspresif</div>
+          <div class="template-thumb" style="background:linear-gradient(135deg,#1a1714,#c44e14);color:white;font-size:11px;font-weight:800;">Creative</div>
+          <div class="template-name">Creative</div><div class="template-desc">Ekspresif</div>
         </div>
         <div class="template-card" onclick="selectTemplate('executive',this)">
-          <div class="template-thumb" style="background:linear-gradient(135deg,#0f172a,#1e3a5f);">\ud83d\udc51</div>
-          <div class="template-name">Executive</div>
-          <div class="template-desc">Premium gelap</div>
+          <div class="template-thumb" style="background:linear-gradient(135deg,#0f172a,#1e3a5f);color:white;font-size:11px;font-weight:800;">Executive</div>
+          <div class="template-name">Executive</div><div class="template-desc">Premium gelap</div>
         </div>
       </div>
     </div>
 
-  </div><!-- end form-scroll -->
+  </div><!-- /form-scroll -->
 
-  <!-- Control bar -->
   <div class="control-bar">
-    <button class="btn btn-ghost btn-sm" onclick="zoomOut()">\ud83d\udd0d\u2212</button>
-    <button class="btn btn-ghost btn-sm" onclick="zoomIn()">\ud83d\udd0d+</button>
-    <button class="btn btn-ghost btn-sm" onclick="resetZoom()" title="Reset zoom">\u21ba</button>
+    <button class="btn btn-ghost btn-sm" onclick="zoomOut()" title="Perkecil">- Zoom</button>
+    <button class="btn btn-ghost btn-sm" onclick="zoomIn()" title="Perbesar">+ Zoom</button>
+    <button class="btn btn-ghost btn-sm" onclick="resetZoom()" title="Reset zoom">Reset</button>
     <div style="flex:1;"></div>
-    <button class="btn btn-primary" onclick="exportPDF()">\u2b07 Export PDF</button>
+    <button class="btn btn-primary" onclick="exportPDF()">Export PDF</button>
   </div>
 
-</div><!-- end form-panel -->
+</div>
 
 <!-- =========== RIGHT PANEL =========== -->
 <div class="preview-panel">
   <div id="cv-wrapper"></div>
 </div>
 
-</div><!-- end app -->
+</div>
 
 <script>
 (function(){
 
-/* ========== THEME ========== */
+/* === THEME === */
 const html = document.documentElement;
 const themeBtn = document.getElementById('themeToggle');
-
 function setTheme(t){
   html.setAttribute('data-theme', t);
-  themeBtn.textContent = t === 'dark' ? '\u2600\ufe0f' : '\ud83c\udf19';
+  themeBtn.textContent = t === 'dark' ? 'Terang' : 'Gelap';
   localStorage.setItem('cvgen_theme', t);
 }
+(function(){ setTheme(localStorage.getItem('cvgen_theme') || 'light'); })();
+themeBtn.addEventListener('click', () => setTheme(html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'));
 
-(function(){
-  const saved = localStorage.getItem('cvgen_theme');
-  setTheme(saved || 'light');
-})();
+/* === STATE === */
+let state = { photo:null, zoom:0.82, template:'modern', experiences:[], educations:[], languages:[], certs:[], skills:[] };
 
-themeBtn.addEventListener('click', () => {
-  setTheme(html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
-});
-
-/* ========== STATE ========== */
-let state = {
-  photo: null,
-  zoom: 0.82,
-  template: 'modern',
-  experiences: [],
-  educations: [],
-  languages: [],
-  certs: [],
-  skills: []
-};
-
-/* ========== TABS ========== */
+/* === TABS === */
 window.switchTab = function(tab, el){
   document.querySelectorAll('.tab-section').forEach(s => s.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById('tab-' + tab).classList.add('active');
+  document.getElementById('tab-'+tab).classList.add('active');
   if(el) el.classList.add('active');
 };
 
-/* ========== TEMPLATE ========== */
+/* === TEMPLATE === */
 window.selectTemplate = function(tmpl, el){
   state.template = tmpl;
   document.querySelectorAll('.template-card').forEach(c => c.classList.remove('selected'));
-  el.classList.add('selected');
-  liveUpdate();
+  el.classList.add('selected'); liveUpdate();
 };
 
-/* ========== PHOTO ========== */
+/* === PHOTO === */
 document.getElementById('fotoInput').addEventListener('change', e => {
-  const file = e.target.files[0];
-  if(!file) return;
+  const file = e.target.files[0]; if(!file) return;
   const reader = new FileReader();
-  reader.onload = ev => {
-    state.photo = ev.target.result;
-    document.getElementById('photoPreview').innerHTML = `<img src="${state.photo}">`;
-    liveUpdate();
-  };
+  reader.onload = ev => { state.photo = ev.target.result; document.getElementById('photoPreview').innerHTML = `<img src="${state.photo}">`; liveUpdate(); };
   reader.readAsDataURL(file);
 });
 
-/* ========== EXPERIENCE ========== */
-window.addExperience = function(){
-  state.experiences.push({year:'',company:'',detail:''});
-  renderExperienceForm(); liveUpdate();
-};
-window.removeExp = function(i){
-  state.experiences.splice(i,1); renderExperienceForm(); liveUpdate();
-};
+/* === EXPERIENCE === */
+window.addExperience = function(){ state.experiences.push({year:'',company:'',detail:''}); renderExpForm(); liveUpdate(); };
+window.removeExp = function(i){ state.experiences.splice(i,1); renderExpForm(); liveUpdate(); };
 window.updateExp = function(i,k,v){ state.experiences[i][k]=v; liveUpdate(); };
-
-function renderExperienceForm(){
-  const c = document.getElementById('experience-list');
-  c.innerHTML = '';
+function renderExpForm(){
+  const c = document.getElementById('experience-list'); c.innerHTML = '';
   state.experiences.forEach((exp,i) => {
-    c.innerHTML += `
-    <div class="item-card">
-      <div class="item-card-header">
-        <span class="item-card-title">Pengalaman ${i+1}</span>
-        <button class="btn btn-danger btn-sm" onclick="removeExp(${i})">\u2715 Hapus</button>
-      </div>
-      <div class="field-group">
-        <label class="field-label">Tahun Kerja</label>
-        <input type="text" placeholder="2021 - 2024" value="${exp.year||''}" oninput="updateExp(${i},'year',this.value)">
-      </div>
-      <div class="field-group">
-        <label class="field-label">Nama Perusahaan &amp; Posisi</label>
-        <input type="text" placeholder="Software Engineer @ PT. ABC" value="${exp.company||''}" oninput="updateExp(${i},'company',this.value)">
-      </div>
-      <div class="field-group">
-        <label class="field-label">Detail Pekerjaan</label>
-        <textarea placeholder="Tanggung jawab &amp; pencapaian..." oninput="updateExp(${i},'detail',this.value)">${exp.detail||''}</textarea>
-      </div>
+    c.innerHTML += `<div class="item-card">
+      <div class="item-card-header"><span class="item-card-title">Pengalaman ${i+1}</span><button class="btn btn-danger btn-sm" onclick="removeExp(${i})">Hapus</button></div>
+      <div class="field-group"><label class="field-label">Tahun Kerja</label><input type="text" placeholder="2021 - 2024" value="${exp.year||''}" oninput="updateExp(${i},'year',this.value)"></div>
+      <div class="field-group"><label class="field-label">Perusahaan &amp; Posisi</label><input type="text" placeholder="Software Engineer @ PT. ABC" value="${exp.company||''}" oninput="updateExp(${i},'company',this.value)"></div>
+      <div class="field-group"><label class="field-label">Detail Pekerjaan</label><textarea placeholder="Tanggung jawab &amp; pencapaian..." oninput="updateExp(${i},'detail',this.value)">${exp.detail||''}</textarea></div>
     </div>`;
   });
 }
 
-/* ========== EDUCATION ========== */
-window.addEducation = function(){
-  state.educations.push({degree:'',school:'',year:''}); renderEducationForm(); liveUpdate();
-};
-window.removeEdu = function(i){ state.educations.splice(i,1); renderEducationForm(); liveUpdate(); };
+/* === EDUCATION === */
+window.addEducation = function(){ state.educations.push({degree:'',school:'',year:''}); renderEduForm(); liveUpdate(); };
+window.removeEdu = function(i){ state.educations.splice(i,1); renderEduForm(); liveUpdate(); };
 window.updateEdu = function(i,k,v){ state.educations[i][k]=v; liveUpdate(); };
-
-function renderEducationForm(){
-  const c = document.getElementById('education-list');
-  c.innerHTML = '';
+function renderEduForm(){
+  const c = document.getElementById('education-list'); c.innerHTML = '';
   state.educations.forEach((edu,i) => {
-    c.innerHTML += `
-    <div class="item-card">
-      <div class="item-card-header">
-        <span class="item-card-title">Pendidikan ${i+1}</span>
-        <button class="btn btn-danger btn-sm" onclick="removeEdu(${i})">\u2715</button>
-      </div>
-      <div class="field-group"><label class="field-label">Gelar / Jurusan</label>
-        <input type="text" placeholder="S1 Teknik Informatika" value="${edu.degree||''}" oninput="updateEdu(${i},'degree',this.value)">
-      </div>
-      <div class="field-group"><label class="field-label">Sekolah / Universitas</label>
-        <input type="text" placeholder="Universitas Indonesia" value="${edu.school||''}" oninput="updateEdu(${i},'school',this.value)">
-      </div>
-      <div class="field-group"><label class="field-label">Tahun</label>
-        <input type="text" placeholder="2018 - 2022" value="${edu.year||''}" oninput="updateEdu(${i},'year',this.value)">
-      </div>
+    c.innerHTML += `<div class="item-card">
+      <div class="item-card-header"><span class="item-card-title">Pendidikan ${i+1}</span><button class="btn btn-danger btn-sm" onclick="removeEdu(${i})">Hapus</button></div>
+      <div class="field-group"><label class="field-label">Gelar / Jurusan</label><input type="text" placeholder="S1 Teknik Informatika" value="${edu.degree||''}" oninput="updateEdu(${i},'degree',this.value)"></div>
+      <div class="field-group"><label class="field-label">Sekolah / Universitas</label><input type="text" placeholder="Universitas Indonesia" value="${edu.school||''}" oninput="updateEdu(${i},'school',this.value)"></div>
+      <div class="field-group"><label class="field-label">Tahun</label><input type="text" placeholder="2018 - 2022" value="${edu.year||''}" oninput="updateEdu(${i},'year',this.value)"></div>
     </div>`;
   });
 }
 
-/* ========== LANGUAGE ========== */
-window.addLanguage = function(){
-  state.languages.push({lang:'',level:''}); renderLanguageForm(); liveUpdate();
-};
-window.removeLang = function(i){ state.languages.splice(i,1); renderLanguageForm(); liveUpdate(); };
+/* === LANGUAGE === */
+window.addLanguage = function(){ state.languages.push({lang:'',level:''}); renderLangForm(); liveUpdate(); };
+window.removeLang = function(i){ state.languages.splice(i,1); renderLangForm(); liveUpdate(); };
 window.updateLang = function(i,k,v){ state.languages[i][k]=v; liveUpdate(); };
-
-function renderLanguageForm(){
-  const c = document.getElementById('language-list');
-  c.innerHTML = '';
+function renderLangForm(){
+  const c = document.getElementById('language-list'); c.innerHTML = '';
   state.languages.forEach((l,i) => {
-    c.innerHTML += `
-    <div class="item-card">
-      <div class="item-card-header">
-        <span class="item-card-title">Bahasa ${i+1}</span>
-        <button class="btn btn-danger btn-sm" onclick="removeLang(${i})">\u2715</button>
-      </div>
+    c.innerHTML += `<div class="item-card">
+      <div class="item-card-header"><span class="item-card-title">Bahasa ${i+1}</span><button class="btn btn-danger btn-sm" onclick="removeLang(${i})">Hapus</button></div>
       <div class="row-2">
-        <div class="field-group"><label class="field-label">Bahasa</label>
-          <input type="text" placeholder="Indonesia" value="${l.lang||''}" oninput="updateLang(${i},'lang',this.value)">
-        </div>
-        <div class="field-group"><label class="field-label">Level</label>
-          <select onchange="updateLang(${i},'level',this.value)">
-            <option value="">Pilih</option>
-            <option value="Native" ${l.level==='Native'?'selected':''}>Native</option>
-            <option value="Profesional" ${l.level==='Profesional'?'selected':''}>Profesional</option>
-            <option value="Menengah" ${l.level==='Menengah'?'selected':''}>Menengah</option>
-            <option value="Dasar" ${l.level==='Dasar'?'selected':''}>Dasar</option>
-          </select>
-        </div>
+        <div class="field-group"><label class="field-label">Bahasa</label><input type="text" placeholder="Indonesia" value="${l.lang||''}" oninput="updateLang(${i},'lang',this.value)"></div>
+        <div class="field-group"><label class="field-label">Level</label><select onchange="updateLang(${i},'level',this.value)">
+          <option value="">Pilih</option>
+          <option value="Native" ${l.level==='Native'?'selected':''}>Native</option>
+          <option value="Profesional" ${l.level==='Profesional'?'selected':''}>Profesional</option>
+          <option value="Menengah" ${l.level==='Menengah'?'selected':''}>Menengah</option>
+          <option value="Dasar" ${l.level==='Dasar'?'selected':''}>Dasar</option>
+        </select></div>
       </div>
     </div>`;
   });
 }
 
-/* ========== CERT ========== */
-window.addCert = function(){
-  state.certs.push({name:'',issuer:'',year:''}); renderCertForm(); liveUpdate();
-};
+/* === CERT === */
+window.addCert = function(){ state.certs.push({name:'',issuer:'',year:''}); renderCertForm(); liveUpdate(); };
 window.removeCert = function(i){ state.certs.splice(i,1); renderCertForm(); liveUpdate(); };
 window.updateCert = function(i,k,v){ state.certs[i][k]=v; liveUpdate(); };
-
 function renderCertForm(){
-  const c = document.getElementById('cert-list');
-  c.innerHTML = '';
+  const c = document.getElementById('cert-list'); c.innerHTML = '';
   state.certs.forEach((cert,i) => {
-    c.innerHTML += `
-    <div class="item-card">
-      <div class="item-card-header">
-        <span class="item-card-title">Sertifikasi ${i+1}</span>
-        <button class="btn btn-danger btn-sm" onclick="removeCert(${i})">\u2715</button>
-      </div>
-      <div class="field-group"><label class="field-label">Nama Sertifikasi</label>
-        <input type="text" placeholder="AWS Cloud Practitioner" value="${cert.name||''}" oninput="updateCert(${i},'name',this.value)">
-      </div>
+    c.innerHTML += `<div class="item-card">
+      <div class="item-card-header"><span class="item-card-title">Sertifikasi ${i+1}</span><button class="btn btn-danger btn-sm" onclick="removeCert(${i})">Hapus</button></div>
+      <div class="field-group"><label class="field-label">Nama Sertifikasi</label><input type="text" placeholder="AWS Cloud Practitioner" value="${cert.name||''}" oninput="updateCert(${i},'name',this.value)"></div>
       <div class="row-2">
-        <div class="field-group"><label class="field-label">Penerbit</label>
-          <input type="text" placeholder="Amazon" value="${cert.issuer||''}" oninput="updateCert(${i},'issuer',this.value)">
-        </div>
-        <div class="field-group"><label class="field-label">Tahun</label>
-          <input type="text" placeholder="2023" value="${cert.year||''}" oninput="updateCert(${i},'year',this.value)">
-        </div>
+        <div class="field-group"><label class="field-label">Penerbit</label><input type="text" placeholder="Amazon" value="${cert.issuer||''}" oninput="updateCert(${i},'issuer',this.value)"></div>
+        <div class="field-group"><label class="field-label">Tahun</label><input type="text" placeholder="2023" value="${cert.year||''}" oninput="updateCert(${i},'year',this.value)"></div>
       </div>
     </div>`;
   });
 }
 
-/* ========== SKILLS ========== */
+/* === SKILLS === */
 window.addSkill = function(){
-  const input = document.getElementById('skillInput');
-  const val = input.value.trim();
-  if(!val) return;
-  state.skills.push(val);
-  input.value = '';
-  renderSkillTags(); liveUpdate();
+  const inp = document.getElementById('skillInput'), val = inp.value.trim(); if(!val) return;
+  state.skills.push(val); inp.value = ''; renderSkillTags(); liveUpdate();
 };
-window.removeSkill = function(i){
-  state.skills.splice(i,1); renderSkillTags(); liveUpdate();
-};
+window.removeSkill = function(i){ state.skills.splice(i,1); renderSkillTags(); liveUpdate(); };
 function renderSkillTags(){
   document.getElementById('skill-tags').innerHTML =
-    state.skills.map((s,i) => `<span class="skill-badge">${s}<span class="del" onclick="removeSkill(${i})">\u00d7</span></span>`).join('');
+    state.skills.map((s,i)=>`<span class="skill-badge">${s}<span class="del" onclick="removeSkill(${i})" title="Hapus">x</span></span>`).join('');
 }
 
-/* ========== HELPERS ========== */
-function getVal(id){ const el = document.getElementById(id); return el ? el.value.trim() : ''; }
-
-function formatTgl(val){
-  if(!val) return '';
-  const d = new Date(val);
-  return d.toLocaleDateString('id-ID',{day:'numeric',month:'long',year:'numeric'});
-}
-
+/* === HELPERS === */
+const G = id => { const e = document.getElementById(id); return e ? e.value.trim() : ''; };
+function fmtTgl(v){ if(!v) return ''; return new Date(v).toLocaleDateString('id-ID',{day:'numeric',month:'long',year:'numeric'}); }
 function photoBlock(cls){
   return state.photo
     ? `<div class="${cls}"><img src="${state.photo}"></div>`
-    : `<div class="${cls}" style="background:#e0dbd4;display:flex;align-items:center;justify-content:center;font-size:26px;">\ud83d\udc64</div>`;
+    : `<div class="${cls}" style="background:#e0dbd4;display:flex;align-items:center;justify-content:center;font-size:24px;">👤</div>`;
+}
+function contacts(sep){
+  const r=[];
+  if(G('tglLahir')) r.push('Lahir: '+fmtTgl(G('tglLahir')));
+  if(G('email'))    r.push(G('email'));
+  if(G('telepon'))  r.push(G('telepon'));
+  if(G('kota'))     r.push(G('kota'));
+  if(G('linkedin')) r.push(G('linkedin'));
+  return r.join(sep);
+}
+function expH(style){
+  return state.experiences.map(e=>{
+    const pts = e.company.split('@').map(s=>s.trim());
+    const ttl = pts.length>1?pts[0]:'', cmp = pts.length>1?pts[1]:pts[0];
+    switch(style){
+      case 'modern': case 'professional':
+        return `<div class="exp-block"><div class="exp-year">${e.year||''}</div><div class="exp-title">${ttl||cmp||''}</div><div class="exp-company">${ttl?cmp:''}</div><div class="exp-detail">${e.detail||''}</div></div>`;
+      case 'formal':
+        return `<div class="exp-block"><div class="exp-header"><div class="exp-title">${ttl||cmp||''}</div><div class="exp-year">${e.year||''}</div></div><div class="exp-company">${ttl?cmp:''}</div><div class="exp-detail">${e.detail||''}</div></div>`;
+      case 'classic':
+        return `<div class="exp-block"><div class="exp-title">${ttl||cmp||''}</div><span class="exp-year">${e.year||''}</span><div class="exp-company">${ttl?cmp:''}</div><div class="exp-detail">${e.detail||''}</div></div>`;
+      case 'minimal':
+        return `<div class="exp-block"><div class="exp-year-col">${e.year||''}</div><div><div class="exp-title">${ttl||cmp||''}</div><div class="exp-company">${ttl?cmp:''}</div><div class="exp-detail">${e.detail||''}</div></div></div>`;
+      case 'creative':
+        return `<div class="exp-block"><span class="exp-badge">${e.year||''}</span><div class="exp-title">${ttl||cmp||''}</div><div class="exp-company">${ttl?cmp:''}</div><div class="exp-detail">${e.detail||''}</div></div>`;
+      case 'executive':
+        return `<div class="exp-block"><div class="exp-row"><div class="exp-title">${ttl||cmp||''}</div><div class="exp-year">${e.year||''}</div></div><div class="exp-company">${ttl?cmp:''}</div><div class="exp-detail">${e.detail||''}</div></div>`;
+    }
+    return '';
+  }).join('');
+}
+function eduH(style){
+  return state.educations.map(e=>{
+    if(style==='formal') return `<div class="edu-block"><div><strong>${e.degree||''}</strong><div style="font-size:11px;color:#475569;">${e.school||''}</div></div><div style="font-size:10px;color:#94a3b8;">${e.year||''}</div></div>`;
+    return `<p style="font-size:11px;margin-bottom:6px;"><strong>${e.degree||''}</strong><br><span style="color:#64748b;">${e.school||''}${e.year?' ('+e.year+')':''}</span></p>`;
+  }).join('');
+}
+function skillsH(style){
+  if(!state.skills.length) return '';
+  if(style==='minimal'||style==='formal') return `<div class="skill-wrap">${state.skills.map(s=>`<span class="skill-pill">${s}</span>`).join('')}</div>`;
+  if(style==='classic') return state.skills.map(s=>`<div class="skill-bar-item"><div class="skill-bar-label">${s}</div><div class="skill-bar"><div class="skill-bar-fill" style="width:80%"></div></div></div>`).join('');
+  if(style==='executive') return state.skills.map(s=>`<div class="skill-item">${s}</div>`).join('');
+  if(style==='professional') return state.skills.map(s=>`<div class="skill-pill">${s}</div>`).join('');
+  return state.skills.map(s=>`<span class="skill-pill">${s}</span>`).join('');
+}
+function langH(cls){ return state.languages.map(l=>`<div class="${cls}">${l.lang}${l.level?' — <em>'+l.level+'</em>':''}</div>`).join(''); }
+function certH(cls){ return state.certs.map(c=>`<div class="${cls}">${c.name}${c.issuer?' - '+c.issuer:''}${c.year?' ('+c.year+')':''}</div>`).join(''); }
+
+/* === BUILD === */
+function build(){
+  const n=G('nama'), p=G('posisi'), r=G('ringkasan'), t=state.template;
+  const c3=contacts(' &nbsp;|&nbsp; '), cd=contacts(' · ');
+
+  const sidebar = (t2) => `
+    ${state.skills.length?`<div class="sidebar-sec"><div class="sidebar-label">Keahlian</div>${skillsH(t2)}</div>`:''}
+    ${state.languages.length?`<div class="sidebar-sec"><div class="sidebar-label">Bahasa</div>${langH('lang-item')}</div>`:''}
+    ${state.certs.length?`<div class="sidebar-sec"><div class="sidebar-label">Sertifikasi</div>${certH('cert-item')}</div>`:''}`;
+
+  const main = (t2) => `
+    ${r?`<div class="sec-block"><div class="sec-title">Tentang Saya</div><div class="ring-text">${r}</div></div>`:''}
+    ${state.experiences.length?`<div class="sec-block"><div class="sec-title">Pengalaman Kerja</div>${expH(t2)}</div>`:''}
+    ${state.educations.length?`<div class="sec-block"><div class="sec-title">Pendidikan</div>${eduH(t2)}</div>`:''}`;
+
+  if(t==='modern') return `<div class="cv-modern">
+    <div class="cv-header">${photoBlock('cv-photo')}<div><div class="cv-name">${n||'Nama Lengkap'}</div><div class="cv-title">${p||'Posisi yang Dilamar'}</div><div class="cv-contact">${c3}</div></div></div>
+    <div class="cv-body"><div class="cv-main">${main('modern')}</div><div class="cv-sidebar">${sidebar('modern')}</div></div></div>`;
+
+  if(t==='formal') return `<div class="cv-formal">
+    <div class="cv-header">${state.photo?`<div class="cv-photo-wrap">${photoBlock('cv-photo')}</div>`:''}<div class="cv-name">${n||'NAMA LENGKAP'}</div><div class="cv-title">${p||'Posisi yang Dilamar'}</div><div class="cv-contact">${cd}</div></div>
+    <div class="cv-body">
+      ${r?`<div class="sec-block"><div class="sec-title">Profil</div><div class="ring-text">${r}</div></div>`:''}
+      ${state.experiences.length?`<div class="sec-block"><div class="sec-title">Pengalaman Kerja</div>${expH('formal')}</div>`:''}
+      ${state.educations.length?`<div class="sec-block"><div class="sec-title">Pendidikan</div>${eduH('formal')}</div>`:''}
+      ${state.skills.length?`<div class="sec-block"><div class="sec-title">Keahlian</div>${skillsH('formal')}</div>`:''}
+      ${state.languages.length||state.certs.length?`<div class="sec-block"><div class="info-grid">${state.languages.length?`<div><div class="sec-title">Bahasa</div>${langH('lang-item')}</div>`:''} ${state.certs.length?`<div><div class="sec-title">Sertifikasi</div>${certH('cert-item')}</div>`:''}</div></div>`:''}
+    </div></div>`;
+
+  if(t==='classic') return `<div class="cv-classic">
+    <div class="cv-header">${photoBlock('cv-photo')}<div><div class="cv-name">${n||'Nama Lengkap'}</div><div class="cv-title">${p||'Posisi yang Dilamar'}</div><div class="cv-contact">${c3}</div></div></div>
+    <div class="cv-body"><div class="cv-left">${sidebar('classic')}</div><div class="cv-right">${main('classic')}</div></div></div>`;
+
+  if(t==='professional') return `<div class="cv-professional">
+    <div class="cv-header"><div class="cv-left-head"><div class="cv-name">${n||'Nama Lengkap'}</div><div class="cv-title">${p||'Posisi yang Dilamar'}</div><div class="cv-tags">${c3.split('|').filter(Boolean).map(s=>`<span class="cv-tag">${s.trim()}</span>`).join('')}</div></div>${photoBlock('cv-photo')}</div>
+    <div class="cv-stripe"></div>
+    <div class="cv-body"><div class="cv-main">${main('professional')}</div><div class="cv-sidebar">${sidebar('professional')}</div></div></div>`;
+
+  if(t==='minimal') return `<div class="cv-minimal">
+    <div class="cv-header">${state.photo?photoBlock('cv-photo'):''}<div class="cv-name">${n||'Nama Lengkap'}</div><div class="cv-title">${p||'Posisi yang Dilamar'}</div><div class="cv-contact">${cd}</div></div>
+    <div class="cv-body">
+      ${r?`<div class="sec-block"><div class="sec-title">Tentang</div><div class="ring-text">${r}</div></div>`:''}
+      ${state.experiences.length?`<div class="sec-block"><div class="sec-title">Pengalaman</div>${expH('minimal')}</div>`:''}
+      ${state.educations.length?`<div class="sec-block"><div class="sec-title">Pendidikan</div>${eduH('minimal')}</div>`:''}
+      ${state.skills.length?`<div class="sec-block"><div class="sec-title">Keahlian</div>${skillsH('minimal')}</div>`:''}
+      ${state.languages.length||state.certs.length?`<div class="sec-block"><div class="info-row">${state.languages.length?`<div><div class="sec-title">Bahasa</div>${langH('lang-item')}</div>`:''}${state.certs.length?`<div><div class="sec-title">Sertifikasi</div>${certH('cert-item')}</div>`:''}</div></div>`:''}
+    </div></div>`;
+
+  if(t==='creative') return `<div class="cv-creative">
+    <div class="cv-header"><div class="cv-top">${photoBlock('cv-photo')}<div><div class="cv-name">${n||'Nama Lengkap'}</div><div class="cv-title">${p||'Posisi yang Dilamar'}</div></div></div>
+    <div class="cv-contact-bar">${cd}</div></div>
+    <div class="cv-body"><div class="cv-main">${main('creative')}</div><div class="cv-sidebar">${sidebar('creative')}</div></div></div>`;
+
+  if(t==='executive'){
+    const yrs=state.experiences.length;
+    return `<div class="cv-executive">
+    <div class="cv-header"><div class="cv-head-left">${photoBlock('cv-photo')}<div class="cv-name">${n||'Nama Lengkap'}</div><div class="cv-title">${p||'Posisi yang Dilamar'}</div></div>
+    <div class="cv-head-right"><div class="ring-text">${r||'Ringkasan profil profesional Anda...'}</div>
+    <div class="cv-stats"><div class="cv-stat"><div class="cv-stat-num">${yrs}</div><div class="cv-stat-label">Pengalaman</div></div><div class="cv-stat"><div class="cv-stat-num">${state.skills.length}</div><div class="cv-stat-label">Keahlian</div></div><div class="cv-stat"><div class="cv-stat-num">${state.certs.length}</div><div class="cv-stat-label">Sertifikat</div></div></div></div></div>
+    <div class="cv-contact-strip">${c3}</div>
+    <div class="cv-body"><div class="cv-left">${sidebar('executive')}</div><div class="cv-right">
+      ${state.experiences.length?`<div class="sec-block"><div class="sec-title">Pengalaman Kerja</div>${expH('executive')}</div>`:''}
+      ${state.educations.length?`<div class="sec-block"><div class="sec-title">Pendidikan</div>${eduH('executive')}</div>`:''}
+    </div></div></div>`;
+  }
+  return '';
 }
 
-function contactStr(sep){
-  const items = [];
-  const tgl = getVal('tglLahir'), em = getVal('email'), tel = getVal('telepon'),
-        kota = getVal('kota'), li = getVal('linkedin');
-  if(tgl)  items.push('\ud83d\udcc5 ' + formatTgl(tgl));
-  if(em)   items.push('\u2709 ' + em);
-  if(tel)  items.push('\ud83d\udcf1 ' + tel);
-  if(kota) items.push('\ud83d\udccd ' + kota);
-  if(li)   items.push('\ud83d\udd17 ' + li);
-  return items.join(sep);
+/* === UPDATE === */
+function liveUpdate(){
+  const w = document.getElementById('cv-wrapper');
+  w.style.transform = `scale(${state.zoom})`;
+  w.style.transformOrigin = 'top center';
+  w.innerHTML = build();
+  updateProgress();
+}
+function updateProgress(){
+  let s = ['nama','email','telepon','kota','posisi','ringkasan'].filter(id=>G(id)).length;
+  if(state.photo) s++; if(state.experiences.length) s++; if(state.educations.length) s++; if(state.skills.length) s++;
+  const pct = Math.round((s/10)*100);
+  document.getElementById('progressBar').style.width = pct+'%';
+  document.getElementById('progressLabel').textContent = pct+'%';
 }
 
-function expHTML(style){
-  return state.experiences.map(e => {
-    const parts = e.company.split('@
+window.zoomIn    = () => { state.zoom = Math.min(1.4, state.zoom+0.05); liveUpdate(); };
+window.zoomOut   = () => { state.zoom = Math.max(0.4, state.zoom-0.05); liveUpdate(); };
+window.resetZoom = () => { state.zoom = 0.82; liveUpdate(); };
+
+window.exportPDF = function(){
+  const w = document.getElementById('cv-wrapper'), orig = w.style.transform;
+  w.style.transform = 'scale(1)';
+  html2pdf().set({ margin:0, filename:'CV-'+(G('nama')||'Saya')+'.pdf', image:{type:'jpeg',quality:0.98}, html2canvas:{scale:2,useCORS:true}, jsPDF:{unit:'mm',format:'a4',orientation:'portrait'} })
+    .from(w).save().then(()=>{ w.style.transform = orig; });
+};
+
+renderExpForm(); renderEduForm(); renderLangForm(); renderCertForm(); renderSkillTags(); liveUpdate();
+
+})();
+</script>
+</body>
+</html>
