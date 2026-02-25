@@ -1,0 +1,1251 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CV Generator PRO</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<style>
+:root{
+  --primary:#4f46e5;
+  --primary2:#7c3aed;
+  --accent:#06b6d4;
+  --bg:#0f0f1a;
+  --panel:#16162a;
+  --card:#1e1e35;
+  --border:#2a2a4a;
+  --text:#e2e8f0;
+  --muted:#94a3b8;
+  --danger:#ef4444;
+  --success:#22c55e;
+  --white:#ffffff;
+}
+
+*{box-sizing:border-box;margin:0;padding:0;}
+
+body{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  display:flex;
+  height:100vh;
+  overflow:hidden;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar{width:5px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:10px;}
+
+.container{display:flex;width:100%;height:100vh;}
+
+/* ======= LEFT PANEL ======= */
+.form-panel{
+  width:380px;
+  min-width:380px;
+  background:var(--panel);
+  border-right:1px solid var(--border);
+  display:flex;
+  flex-direction:column;
+  height:100vh;
+  overflow:hidden;
+}
+
+.panel-header{
+  padding:20px 22px 15px;
+  border-bottom:1px solid var(--border);
+  background:linear-gradient(135deg,rgba(79,70,229,0.15),rgba(124,58,237,0.1));
+  flex-shrink:0;
+}
+
+.panel-header h1{
+  font-size:18px;
+  font-weight:800;
+  background:linear-gradient(135deg,#a78bfa,#38bdf8);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+  letter-spacing:-0.5px;
+}
+
+.panel-header p{font-size:11px;color:var(--muted);margin-top:2px;}
+
+.progress-wrap{margin-top:12px;}
+.progress-label{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:5px;}
+.progress{height:6px;background:var(--border);border-radius:10px;}
+.progress-bar{height:100%;width:0%;background:linear-gradient(90deg,var(--primary),var(--accent));border-radius:10px;transition:width 0.4s ease;}
+
+/* Tabs */
+.tabs{
+  display:flex;
+  border-bottom:1px solid var(--border);
+  flex-shrink:0;
+  overflow-x:auto;
+}
+.tab-btn{
+  flex:1;
+  min-width:60px;
+  padding:10px 6px;
+  background:none;
+  border:none;
+  color:var(--muted);
+  font-size:10px;
+  font-family:inherit;
+  font-weight:600;
+  cursor:pointer;
+  border-bottom:2px solid transparent;
+  transition:all 0.2s;
+  text-transform:uppercase;
+  letter-spacing:0.5px;
+}
+.tab-btn.active{color:#a78bfa;border-bottom-color:#a78bfa;}
+.tab-btn:hover{color:var(--text);}
+
+.form-scroll{overflow-y:auto;flex:1;padding:18px 20px 30px;}
+
+.tab-section{display:none;}
+.tab-section.active{display:block;}
+
+/* Form elements */
+.field-group{margin-bottom:14px;}
+.field-label{
+  display:block;
+  font-size:11px;
+  font-weight:600;
+  color:var(--muted);
+  text-transform:uppercase;
+  letter-spacing:0.7px;
+  margin-bottom:6px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="date"],
+select,
+textarea{
+  width:100%;
+  padding:9px 12px;
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:8px;
+  color:var(--text);
+  font-family:inherit;
+  font-size:13px;
+  outline:none;
+  transition:border-color 0.2s,box-shadow 0.2s;
+}
+
+input:focus,select:focus,textarea:focus{
+  border-color:#4f46e5;
+  box-shadow:0 0 0 3px rgba(79,70,229,0.15);
+}
+
+textarea{resize:vertical;min-height:90px;}
+textarea.large{min-height:130px;}
+
+select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%2394a3b8' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;cursor:pointer;}
+
+.row-2{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;}
+
+/* Buttons */
+.btn{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:8px 14px;
+  border:none;border-radius:8px;
+  cursor:pointer;
+  font-family:inherit;font-size:12px;font-weight:600;
+  transition:all 0.2s;
+}
+.btn-primary{background:var(--primary);color:white;}
+.btn-primary:hover{background:#4338ca;transform:translateY(-1px);}
+.btn-success{background:var(--success);color:white;}
+.btn-danger{background:var(--danger);color:white;}
+.btn-danger:hover{background:#dc2626;}
+.btn-ghost{background:var(--border);color:var(--text);}
+.btn-ghost:hover{background:rgba(79,70,229,0.3);color:#a78bfa;}
+.btn-sm{padding:5px 10px;font-size:11px;}
+.btn-add{
+  width:100%;
+  padding:9px;
+  background:transparent;
+  border:1.5px dashed var(--border);
+  border-radius:8px;
+  color:var(--muted);
+  font-family:inherit;font-size:12px;font-weight:600;
+  cursor:pointer;
+  transition:all 0.2s;
+  margin-top:8px;
+}
+.btn-add:hover{border-color:#4f46e5;color:#a78bfa;background:rgba(79,70,229,0.05);}
+
+/* Cards */
+.item-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:14px;
+  margin-bottom:10px;
+  position:relative;
+}
+
+.item-card-header{
+  display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:10px;
+}
+
+.item-card-title{font-size:12px;font-weight:700;color:#a78bfa;}
+
+.section-title{
+  font-size:12px;font-weight:700;
+  text-transform:uppercase;letter-spacing:1px;
+  color:#a78bfa;
+  margin-bottom:14px;
+  padding-bottom:8px;
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:6px;
+}
+
+/* Photo upload */
+.photo-upload-wrap{
+  display:flex;align-items:center;gap:14px;
+  margin-bottom:16px;
+}
+.photo-preview{
+  width:72px;height:72px;
+  border-radius:50%;
+  background:var(--card);
+  border:2px dashed var(--border);
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;
+  flex-shrink:0;
+  cursor:pointer;
+}
+.photo-preview img{width:100%;height:100%;object-fit:cover;}
+.photo-preview-icon{font-size:22px;color:var(--muted);}
+.photo-upload-info p{font-size:11px;color:var(--muted);margin-top:4px;}
+
+/* Template grid */
+.template-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:10px;
+}
+.template-card{
+  border:2px solid var(--border);
+  border-radius:10px;
+  padding:10px;
+  cursor:pointer;
+  transition:all 0.2s;
+  text-align:center;
+}
+.template-card:hover{border-color:#4f46e5;background:rgba(79,70,229,0.05);}
+.template-card.selected{border-color:#a78bfa;background:rgba(167,139,250,0.1);}
+.template-thumb{
+  height:70px;border-radius:6px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:22px;margin-bottom:6px;
+}
+.template-name{font-size:11px;font-weight:700;color:var(--text);}
+.template-desc{font-size:10px;color:var(--muted);margin-top:2px;}
+
+/* Controls */
+.control-bar{
+  display:flex;gap:8px;flex-wrap:wrap;
+  padding:14px 20px;
+  border-top:1px solid var(--border);
+  background:var(--panel);
+  flex-shrink:0;
+}
+
+/* Color picker */
+.color-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;}
+.color-swatch{
+  width:28px;height:28px;border-radius:50%;cursor:pointer;
+  border:2px solid transparent;transition:all 0.2s;
+}
+.color-swatch.selected{border-color:white;transform:scale(1.15);}
+
+/* ======= RIGHT PANEL ======= */
+.preview-panel{
+  flex:1;
+  padding:24px;
+  overflow:auto;
+  background:#0a0a14;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+
+.preview-toolbar{
+  display:flex;gap:8px;align-items:center;
+  margin-bottom:16px;
+  flex-shrink:0;
+}
+
+#cv-wrapper{
+  background:white;
+  width:794px;
+  min-height:1123px;
+  box-shadow:0 20px 60px rgba(0,0,0,0.5);
+  transform-origin:top center;
+  flex-shrink:0;
+}
+
+/* Badge skill */
+.skill-badge{
+  display:inline-flex;align-items:center;gap:4px;
+  padding:4px 10px;
+  background:rgba(79,70,229,0.15);
+  border:1px solid rgba(79,70,229,0.3);
+  border-radius:20px;
+  font-size:11px;color:#a78bfa;
+  margin:3px;cursor:default;
+}
+.skill-badge .del-skill{cursor:pointer;opacity:0.6;font-size:13px;line-height:1;}
+.skill-badge .del-skill:hover{opacity:1;color:var(--danger);}
+.skill-input-row{display:flex;gap:6px;}
+
+/* ======= CV TEMPLATES ======= */
+
+/* MODERN */
+.cv-modern{color:#1e293b;font-family:'Plus Jakarta Sans',sans-serif;}
+.cv-modern .cv-header{background:linear-gradient(135deg,#4f46e5,#7c3aed);color:white;padding:32px 40px;display:flex;gap:24px;align-items:center;}
+.cv-modern .cv-photo{width:90px;height:90px;border-radius:50%;border:3px solid rgba(255,255,255,0.4);overflow:hidden;flex-shrink:0;}
+.cv-modern .cv-photo img{width:100%;height:100%;object-fit:cover;}
+.cv-modern .cv-name{font-size:26px;font-weight:800;letter-spacing:-0.5px;}
+.cv-modern .cv-title{font-size:14px;opacity:0.85;margin-top:4px;}
+.cv-modern .cv-contact{display:flex;flex-wrap:wrap;gap:12px;margin-top:10px;font-size:12px;opacity:0.9;}
+.cv-modern .cv-body{display:flex;gap:0;}
+.cv-modern .cv-main{flex:1;padding:24px 28px;}
+.cv-modern .cv-sidebar{width:220px;padding:24px 20px;background:#f8fafc;border-left:1px solid #e2e8f0;}
+.cv-modern .sec-title{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1.5px;color:#4f46e5;margin-bottom:12px;display:flex;align-items:center;gap:6px;}
+.cv-modern .sec-title::after{content:'';flex:1;height:2px;background:linear-gradient(90deg,#4f46e5,transparent);}
+.cv-modern .sec-block{margin-bottom:20px;}
+.cv-modern .exp-block{margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid #f1f5f9;}
+.cv-modern .exp-title{font-size:13px;font-weight:700;color:#1e293b;}
+.cv-modern .exp-company{font-size:12px;color:#4f46e5;font-weight:600;}
+.cv-modern .exp-year{font-size:11px;color:#94a3b8;}
+.cv-modern .exp-detail{font-size:12px;color:#475569;margin-top:4px;line-height:1.5;}
+.cv-modern .sidebar-sec{margin-bottom:18px;}
+.cv-modern .sidebar-label{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:#7c3aed;margin-bottom:8px;}
+.cv-modern .skill-pill{display:inline-block;padding:3px 10px;background:#ede9fe;color:#5b21b6;border-radius:20px;font-size:11px;font-weight:600;margin:2px;}
+.cv-modern .info-row{font-size:12px;color:#475569;margin-bottom:5px;display:flex;align-items:flex-start;gap:6px;}
+.cv-modern .ring-text{font-size:13px;color:#475569;line-height:1.7;}
+.cv-modern .lang-item{display:flex;justify-content:space-between;font-size:12px;color:#475569;margin-bottom:4px;}
+.cv-modern .cert-item{font-size:12px;color:#475569;margin-bottom:4px;padding-left:10px;border-left:2px solid #c4b5fd;}
+
+/* FORMAL */
+.cv-formal{color:#1a1a2e;font-family:'Plus Jakarta Sans',sans-serif;}
+.cv-formal .cv-header{padding:32px 48px;border-bottom:3px solid #1a1a2e;text-align:center;}
+.cv-formal .cv-photo-wrap{display:flex;justify-content:center;margin-bottom:12px;}
+.cv-formal .cv-photo{width:80px;height:80px;border-radius:50%;border:2px solid #1a1a2e;overflow:hidden;}
+.cv-formal .cv-photo img{width:100%;height:100%;object-fit:cover;}
+.cv-formal .cv-name{font-size:28px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:#1a1a2e;}
+.cv-formal .cv-title{font-size:13px;letter-spacing:3px;text-transform:uppercase;color:#4f46e5;margin-top:6px;}
+.cv-formal .cv-contact{display:flex;flex-wrap:wrap;justify-content:center;gap:16px;margin-top:10px;font-size:11px;color:#475569;}
+.cv-formal .cv-body{padding:28px 48px;}
+.cv-formal .sec-title{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:2px;color:#1a1a2e;margin-bottom:12px;padding-bottom:6px;border-bottom:1px solid #1a1a2e;}
+.cv-formal .sec-block{margin-bottom:22px;}
+.cv-formal .exp-block{margin-bottom:14px;}
+.cv-formal .exp-header{display:flex;justify-content:space-between;align-items:baseline;}
+.cv-formal .exp-title{font-size:13px;font-weight:700;}
+.cv-formal .exp-year{font-size:11px;color:#64748b;}
+.cv-formal .exp-company{font-size:12px;color:#4f46e5;font-style:italic;}
+.cv-formal .exp-detail{font-size:12px;color:#475569;margin-top:3px;line-height:1.5;}
+.cv-formal .skill-wrap{display:flex;flex-wrap:wrap;gap:6px;}
+.cv-formal .skill-pill{padding:3px 10px;border:1px solid #1a1a2e;font-size:11px;font-weight:600;border-radius:3px;}
+.cv-formal .ring-text{font-size:13px;color:#475569;line-height:1.7;}
+.cv-formal .edu-block{margin-bottom:10px;display:flex;justify-content:space-between;align-items:baseline;}
+.cv-formal .info-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.cv-formal .info-row{font-size:12px;color:#475569;}
+.cv-formal .lang-item{font-size:12px;color:#475569;display:inline-block;margin-right:12px;}
+.cv-formal .cert-item{font-size:12px;color:#475569;margin-bottom:4px;}
+
+/* CLASSIC */
+.cv-classic{color:#2d2d2d;font-family:'Plus Jakarta Sans',sans-serif;}
+.cv-classic .cv-header{background:#1e293b;color:white;padding:28px 36px;display:flex;gap:20px;align-items:center;}
+.cv-classic .cv-photo{width:85px;height:85px;border-radius:8px;overflow:hidden;border:2px solid rgba(255,255,255,0.2);flex-shrink:0;}
+.cv-classic .cv-photo img{width:100%;height:100%;object-fit:cover;}
+.cv-classic .cv-name{font-size:24px;font-weight:800;}
+.cv-classic .cv-title{font-size:13px;color:#94a3b8;margin-top:4px;}
+.cv-classic .cv-contact{display:flex;flex-wrap:wrap;gap:12px;margin-top:8px;font-size:11px;color:#cbd5e1;}
+.cv-classic .cv-body{display:flex;}
+.cv-classic .cv-left{width:200px;background:#f8fafc;padding:20px;border-right:1px solid #e2e8f0;}
+.cv-classic .cv-right{flex:1;padding:22px 26px;}
+.cv-classic .sec-title{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1.5px;color:#1e293b;margin-bottom:10px;padding-bottom:4px;border-bottom:2px solid #1e293b;}
+.cv-classic .sec-block{margin-bottom:18px;}
+.cv-classic .exp-block{margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid #e2e8f0;}
+.cv-classic .exp-title{font-size:13px;font-weight:700;}
+.cv-classic .exp-company{font-size:12px;color:#475569;font-weight:600;}
+.cv-classic .exp-year{font-size:11px;color:#94a3b8;background:#e2e8f0;padding:1px 7px;border-radius:10px;display:inline-block;margin-top:2px;}
+.cv-classic .exp-detail{font-size:12px;color:#475569;margin-top:4px;line-height:1.5;}
+.cv-classic .skill-bar-item{margin-bottom:8px;}
+.cv-classic .skill-bar-label{font-size:11px;font-weight:600;margin-bottom:3px;}
+.cv-classic .skill-bar{height:5px;background:#e2e8f0;border-radius:10px;}
+.cv-classic .skill-bar-fill{height:100%;background:#1e293b;border-radius:10px;}
+.cv-classic .info-row{font-size:11px;color:#475569;margin-bottom:5px;}
+.cv-classic .ring-text{font-size:12px;color:#475569;line-height:1.7;}
+.cv-classic .lang-item{font-size:11px;color:#475569;margin-bottom:4px;}
+.cv-classic .cert-item{font-size:11px;color:#475569;margin-bottom:4px;}
+
+/* PROFESSIONAL */
+.cv-professional{color:#1e293b;font-family:'Plus Jakarta Sans',sans-serif;}
+.cv-professional .cv-header{padding:30px 40px;background:#0f172a;color:white;display:flex;justify-content:space-between;align-items:center;gap:20px;}
+.cv-professional .cv-left-head{flex:1;}
+.cv-professional .cv-photo{width:85px;height:85px;border-radius:50%;overflow:hidden;border:3px solid #4f46e5;flex-shrink:0;}
+.cv-professional .cv-photo img{width:100%;height:100%;object-fit:cover;}
+.cv-professional .cv-name{font-size:26px;font-weight:800;}
+.cv-professional .cv-title{font-size:13px;color:#94a3b8;margin-top:4px;}
+.cv-professional .cv-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;}
+.cv-professional .cv-tag{font-size:10px;padding:3px 10px;border:1px solid rgba(79,70,229,0.5);color:#a78bfa;border-radius:20px;}
+.cv-professional .cv-stripe{height:4px;background:linear-gradient(90deg,#4f46e5,#06b6d4,#22c55e);}
+.cv-professional .cv-body{display:flex;gap:0;}
+.cv-professional .cv-main{flex:1;padding:22px 28px;}
+.cv-professional .cv-sidebar{width:210px;padding:22px 18px;background:#f8fafc;border-left:1px solid #e2e8f0;}
+.cv-professional .sec-title{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1.5px;color:#4f46e5;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.cv-professional .sec-title::before{content:'';width:14px;height:14px;background:#4f46e5;border-radius:3px;flex-shrink:0;}
+.cv-professional .sec-block{margin-bottom:20px;}
+.cv-professional .exp-block{margin-bottom:14px;padding:12px;background:#f8fafc;border-radius:8px;border-left:3px solid #4f46e5;}
+.cv-professional .exp-title{font-size:13px;font-weight:700;}
+.cv-professional .exp-company{font-size:12px;color:#4f46e5;font-weight:600;}
+.cv-professional .exp-year{font-size:11px;color:#94a3b8;}
+.cv-professional .exp-detail{font-size:12px;color:#475569;margin-top:4px;line-height:1.5;}
+.cv-professional .sidebar-sec{margin-bottom:18px;}
+.cv-professional .sidebar-label{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:#4f46e5;margin-bottom:8px;}
+.cv-professional .skill-pill{display:block;font-size:11px;font-weight:600;color:#4f46e5;padding:4px 0;border-bottom:1px solid #e2e8f0;}
+.cv-professional .ring-text{font-size:12px;color:#475569;line-height:1.7;}
+.cv-professional .info-row{font-size:11px;color:#475569;margin-bottom:5px;word-break:break-all;}
+.cv-professional .lang-item{font-size:11px;color:#475569;margin-bottom:4px;}
+.cv-professional .cert-item{font-size:11px;color:#475569;margin-bottom:4px;padding-left:8px;border-left:2px solid #c4b5fd;}
+
+/* MINIMAL */
+.cv-minimal{color:#18181b;font-family:'Plus Jakarta Sans',sans-serif;}
+.cv-minimal .cv-header{padding:40px 50px 24px;border-bottom:1px solid #e4e4e7;}
+.cv-minimal .cv-photo{width:72px;height:72px;border-radius:50%;overflow:hidden;float:right;margin-left:16px;border:1px solid #e4e4e7;}
+.cv-minimal .cv-photo img{width:100%;height:100%;object-fit:cover;}
+.cv-minimal .cv-name{font-size:30px;font-weight:800;letter-spacing:-1px;}
+.cv-minimal .cv-title{font-size:14px;color:#71717a;margin-top:4px;}
+.cv-minimal .cv-contact{display:flex;flex-wrap:wrap;gap:14px;margin-top:10px;font-size:11px;color:#71717a;}
+.cv-minimal .cv-body{padding:24px 50px;}
+.cv-minimal .sec-title{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:2px;color:#a1a1aa;margin-bottom:12px;}
+.cv-minimal .sec-block{margin-bottom:22px;}
+.cv-minimal .exp-block{display:flex;gap:16px;margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid #f4f4f5;}
+.cv-minimal .exp-year-col{width:100px;flex-shrink:0;font-size:11px;color:#a1a1aa;padding-top:1px;}
+.cv-minimal .exp-title{font-size:13px;font-weight:700;}
+.cv-minimal .exp-company{font-size:12px;color:#71717a;}
+.cv-minimal .exp-detail{font-size:12px;color:#71717a;margin-top:3px;line-height:1.5;}
+.cv-minimal .skill-wrap{display:flex;flex-wrap:wrap;gap:6px;}
+.cv-minimal .skill-pill{padding:3px 10px;border:1px solid #e4e4e7;font-size:11px;border-radius:4px;color:#52525b;}
+.cv-minimal .ring-text{font-size:13px;color:#52525b;line-height:1.8;}
+.cv-minimal .info-row{display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:#71717a;}
+.cv-minimal .lang-item{font-size:12px;color:#52525b;display:inline-block;margin-right:12px;}
+.cv-minimal .cert-item{font-size:12px;color:#52525b;margin-bottom:4px;}
+
+/* CREATIVE */
+.cv-creative{color:#1e1b4b;font-family:'Plus Jakarta Sans',sans-serif;}
+.cv-creative .cv-header{background:linear-gradient(135deg,#1e1b4b 60%,#312e81);color:white;padding:28px 36px;position:relative;overflow:hidden;}
+.cv-creative .cv-header::before{content:'';position:absolute;top:-50px;right:-50px;width:200px;height:200px;border-radius:50%;background:rgba(167,139,250,0.15);}
+.cv-creative .cv-header::after{content:'';position:absolute;bottom:-30px;left:100px;width:120px;height:120px;border-radius:50%;background:rgba(6,182,212,0.1);}
+.cv-creative .cv-top{display:flex;align-items:center;gap:20px;position:relative;z-index:1;}
+.cv-creative .cv-photo{width:88px;height:88px;border-radius:12px;overflow:hidden;border:2px solid rgba(167,139,250,0.4);flex-shrink:0;}
+.cv-creative .cv-photo img{width:100%;height:100%;object-fit:cover;}
+.cv-creative .cv-name{font-size:26px;font-weight:800;}
+.cv-creative .cv-title{font-size:13px;color:#c4b5fd;margin-top:4px;}
+.cv-creative .cv-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;}
+.cv-creative .cv-tag{font-size:10px;padding:3px 10px;background:rgba(167,139,250,0.2);border-radius:20px;color:#ddd6fe;}
+.cv-creative .cv-contact-bar{display:flex;flex-wrap:wrap;gap:16px;margin-top:14px;padding-top:14px;border-top:1px solid rgba(255,255,255,0.15);font-size:11px;color:#c4b5fd;position:relative;z-index:1;}
+.cv-creative .cv-body{display:flex;}
+.cv-creative .cv-main{flex:1;padding:22px 28px;}
+.cv-creative .cv-sidebar{width:210px;padding:22px 18px;background:#faf5ff;}
+.cv-creative .sec-title{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:#5b21b6;margin-bottom:12px;padding-bottom:6px;border-bottom:2px solid #ede9fe;}
+.cv-creative .sec-block{margin-bottom:20px;}
+.cv-creative .exp-block{margin-bottom:14px;}
+.cv-creative .exp-badge{display:inline-block;font-size:10px;font-weight:700;padding:2px 8px;background:#ede9fe;color:#5b21b6;border-radius:20px;margin-bottom:4px;}
+.cv-creative .exp-title{font-size:13px;font-weight:700;color:#1e1b4b;}
+.cv-creative .exp-company{font-size:12px;color:#7c3aed;font-weight:600;}
+.cv-creative .exp-detail{font-size:12px;color:#475569;margin-top:3px;line-height:1.5;}
+.cv-creative .sidebar-sec{margin-bottom:18px;}
+.cv-creative .sidebar-label{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:#7c3aed;margin-bottom:8px;}
+.cv-creative .skill-pill{display:inline-block;padding:3px 10px;background:#ede9fe;color:#5b21b6;border-radius:20px;font-size:11px;font-weight:600;margin:2px;}
+.cv-creative .ring-text{font-size:12px;color:#475569;line-height:1.7;}
+.cv-creative .info-row{font-size:11px;color:#475569;margin-bottom:5px;}
+.cv-creative .lang-item{font-size:11px;color:#475569;margin-bottom:4px;}
+.cv-creative .cert-item{font-size:11px;color:#475569;margin-bottom:4px;padding-left:8px;border-left:2px solid #c4b5fd;}
+
+/* EXECUTIVE */
+.cv-executive{color:#1e293b;font-family:'Plus Jakarta Sans',sans-serif;}
+.cv-executive .cv-header{background:#0f172a;color:white;padding:0;display:flex;}
+.cv-executive .cv-head-left{background:linear-gradient(135deg,#1e3a5f,#0f172a);padding:28px 24px;width:240px;flex-shrink:0;display:flex;flex-direction:column;align-items:center;text-align:center;}
+.cv-executive .cv-photo{width:90px;height:90px;border-radius:50%;overflow:hidden;border:3px solid rgba(148,163,184,0.3);margin-bottom:12px;}
+.cv-executive .cv-photo img{width:100%;height:100%;object-fit:cover;}
+.cv-executive .cv-name{font-size:18px;font-weight:800;line-height:1.2;}
+.cv-executive .cv-title{font-size:11px;color:#94a3b8;margin-top:6px;text-transform:uppercase;letter-spacing:1px;}
+.cv-executive .cv-head-right{flex:1;padding:28px 28px;}
+.cv-executive .ring-text{font-size:12px;color:#cbd5e1;line-height:1.7;}
+.cv-executive .cv-stats{display:flex;gap:0;margin-top:16px;border-top:1px solid rgba(255,255,255,0.1);padding-top:16px;}
+.cv-executive .cv-stat{flex:1;text-align:center;border-right:1px solid rgba(255,255,255,0.1);}
+.cv-executive .cv-stat:last-child{border-right:none;}
+.cv-executive .cv-stat-num{font-size:20px;font-weight:800;color:white;}
+.cv-executive .cv-stat-label{font-size:10px;color:#94a3b8;text-transform:uppercase;letter-spacing:0.5px;}
+.cv-executive .cv-contact-strip{background:#1e293b;padding:8px 28px;display:flex;gap:20px;flex-wrap:wrap;border-top:2px solid #4f46e5;}
+.cv-executive .cv-contact-strip span{font-size:11px;color:#94a3b8;}
+.cv-executive .cv-body{display:flex;}
+.cv-executive .cv-left{width:240px;padding:20px;background:#f8fafc;border-right:1px solid #e2e8f0;flex-shrink:0;}
+.cv-executive .cv-right{flex:1;padding:20px 26px;}
+.cv-executive .sec-title{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1.5px;color:#0f172a;margin-bottom:10px;padding-bottom:5px;border-bottom:2px solid #0f172a;}
+.cv-executive .sec-block{margin-bottom:18px;}
+.cv-executive .exp-block{margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid #f1f5f9;}
+.cv-executive .exp-title{font-size:13px;font-weight:700;}
+.cv-executive .exp-row{display:flex;justify-content:space-between;align-items:baseline;}
+.cv-executive .exp-company{font-size:12px;color:#4f46e5;font-weight:600;}
+.cv-executive .exp-year{font-size:11px;color:#94a3b8;}
+.cv-executive .exp-detail{font-size:12px;color:#475569;margin-top:3px;line-height:1.5;}
+.cv-executive .skill-item{font-size:11px;color:#475569;padding:4px 0;border-bottom:1px dotted #e2e8f0;}
+.cv-executive .info-row{font-size:11px;color:#475569;margin-bottom:5px;}
+.cv-executive .lang-item{font-size:11px;color:#475569;margin-bottom:4px;}
+.cv-executive .cert-item{font-size:11px;color:#475569;margin-bottom:4px;}
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- ===== LEFT PANEL ===== -->
+<div class="form-panel">
+
+<div class="panel-header">
+  <h1>⚡ CV Generator PRO</h1>
+  <p>Buat CV profesional dalam hitungan menit</p>
+  <div class="progress-wrap">
+    <div class="progress-label">
+      <span>Kelengkapan CV</span>
+      <span id="progressLabel">0%</span>
+    </div>
+    <div class="progress"><div class="progress-bar" id="progressBar"></div></div>
+  </div>
+</div>
+
+<div class="tabs">
+  <button class="tab-btn active" onclick="switchTab('info')">👤 Info</button>
+  <button class="tab-btn" onclick="switchTab('exp')">💼 Karir</button>
+  <button class="tab-btn" onclick="switchTab('edu')">🎓 Edu</button>
+  <button class="tab-btn" onclick="switchTab('skills')">⚡ Skill</button>
+  <button class="tab-btn" onclick="switchTab('template')">🎨 Tema</button>
+</div>
+
+<div class="form-scroll">
+
+<!-- TAB INFO -->
+<div class="tab-section active" id="tab-info">
+  <div class="section-title">📋 Informasi Pribadi</div>
+  
+  <div class="photo-upload-wrap">
+    <div class="photo-preview" id="photoPreview" onclick="document.getElementById('fotoInput').click()">
+      <span class="photo-preview-icon">📷</span>
+    </div>
+    <div class="photo-upload-info">
+      <button class="btn btn-ghost btn-sm" onclick="document.getElementById('fotoInput').click()">Upload Foto</button>
+      <p>Klik untuk pilih foto profil</p>
+    </div>
+  </div>
+  <input type="file" id="fotoInput" accept="image/*" style="display:none">
+  
+  <div class="field-group">
+    <label class="field-label">Nama Lengkap</label>
+    <input type="text" id="nama" placeholder="Masukkan nama lengkap" oninput="liveUpdate()">
+  </div>
+  
+  <div class="field-group">
+    <label class="field-label">Tanggal Lahir</label>
+    <input type="date" id="tglLahir" oninput="liveUpdate()">
+  </div>
+  
+  <div class="field-group">
+    <label class="field-label">Email</label>
+    <input type="email" id="email" placeholder="email@contoh.com" oninput="liveUpdate()">
+  </div>
+  
+  <div class="field-group">
+    <label class="field-label">Nomor HP</label>
+    <input type="tel" id="telepon" placeholder="+62 812 xxxx xxxx" oninput="liveUpdate()">
+  </div>
+  
+  <div class="field-group">
+    <label class="field-label">Kota Asal</label>
+    <input type="text" id="kota" placeholder="Jakarta, Surabaya, ..." oninput="liveUpdate()">
+  </div>
+  
+  <div class="field-group">
+    <label class="field-label">LinkedIn / Portofolio</label>
+    <input type="text" id="linkedin" placeholder="linkedin.com/in/username" oninput="liveUpdate()">
+  </div>
+  
+  <div class="field-group">
+    <label class="field-label">Posisi yang Dilamar</label>
+    <input type="text" id="posisi" placeholder="Software Engineer, Designer, ..." oninput="liveUpdate()">
+  </div>
+  
+  <div class="field-group">
+    <label class="field-label">Ringkasan Diri</label>
+    <textarea class="large" id="ringkasan" placeholder="Ceritakan dirimu secara singkat: pengalaman, keahlian utama, dan apa yang kamu tawarkan..." oninput="liveUpdate()"></textarea>
+  </div>
+</div>
+
+<!-- TAB EXPERIENCE -->
+<div class="tab-section" id="tab-exp">
+  <div class="section-title">💼 Pengalaman Kerja</div>
+  <div id="experience-list"></div>
+  <button class="btn-add" onclick="addExperience()">+ Tambah Pengalaman Kerja</button>
+</div>
+
+<!-- TAB EDUCATION -->
+<div class="tab-section" id="tab-edu">
+  <div class="section-title">🎓 Pendidikan</div>
+  <div id="education-list"></div>
+  <button class="btn-add" onclick="addEducation()">+ Tambah Pendidikan</button>
+  
+  <div class="section-title" style="margin-top:20px;">🌐 Bahasa</div>
+  <div id="language-list"></div>
+  <button class="btn-add" onclick="addLanguage()">+ Tambah Bahasa</button>
+  
+  <div class="section-title" style="margin-top:20px;">🏆 Sertifikasi (Opsional)</div>
+  <div id="cert-list"></div>
+  <button class="btn-add" onclick="addCert()">+ Tambah Sertifikasi</button>
+</div>
+
+<!-- TAB SKILLS -->
+<div class="tab-section" id="tab-skills">
+  <div class="section-title">⚡ Keahlian / Skill</div>
+  <div class="skill-input-row">
+    <input type="text" id="skillInput" placeholder="Tambah skill..." onkeydown="if(event.key==='Enter'){addSkill();}">
+    <button class="btn btn-primary btn-sm" onclick="addSkill()">Tambah</button>
+  </div>
+  <div id="skill-tags" style="margin-top:10px;"></div>
+</div>
+
+<!-- TAB TEMPLATE -->
+<div class="tab-section" id="tab-template">
+  <div class="section-title">🎨 Pilih Template</div>
+  <div class="template-grid" id="templateGrid">
+    <div class="template-card selected" onclick="selectTemplate('modern',this)">
+      <div class="template-thumb" style="background:linear-gradient(135deg,#4f46e5,#7c3aed);">✨</div>
+      <div class="template-name">Modern</div>
+      <div class="template-desc">Sidebar warna</div>
+    </div>
+    <div class="template-card" onclick="selectTemplate('formal',this)">
+      <div class="template-thumb" style="background:linear-gradient(135deg,#1a1a2e,#16213e);">🎩</div>
+      <div class="template-name">Formal</div>
+      <div class="template-desc">Elegan & resmi</div>
+    </div>
+    <div class="template-card" onclick="selectTemplate('classic',this)">
+      <div class="template-thumb" style="background:linear-gradient(135deg,#1e293b,#334155);">📋</div>
+      <div class="template-name">Classic</div>
+      <div class="template-desc">Sidebar gelap</div>
+    </div>
+    <div class="template-card" onclick="selectTemplate('professional',this)">
+      <div class="template-thumb" style="background:linear-gradient(135deg,#0f172a,#4f46e5);">💼</div>
+      <div class="template-name">Professional</div>
+      <div class="template-desc">Aksen biru</div>
+    </div>
+    <div class="template-card" onclick="selectTemplate('minimal',this)">
+      <div class="template-thumb" style="background:linear-gradient(135deg,#f8fafc,#e2e8f0);">⬜</div>
+      <div class="template-name">Minimal</div>
+      <div class="template-desc">Bersih & simple</div>
+    </div>
+    <div class="template-card" onclick="selectTemplate('creative',this)">
+      <div class="template-thumb" style="background:linear-gradient(135deg,#1e1b4b,#7c3aed);">🎨</div>
+      <div class="template-name">Creative</div>
+      <div class="template-desc">Ungu ekspresif</div>
+    </div>
+    <div class="template-card" onclick="selectTemplate('executive',this)">
+      <div class="template-thumb" style="background:linear-gradient(135deg,#0f172a,#1e3a5f);">👑</div>
+      <div class="template-name">Executive</div>
+      <div class="template-desc">Eksekutif premium</div>
+    </div>
+  </div>
+</div>
+
+</div><!-- end form-scroll -->
+
+<div class="control-bar">
+  <button class="btn btn-ghost btn-sm" onclick="zoomOut()">🔍−</button>
+  <button class="btn btn-ghost btn-sm" onclick="zoomIn()">🔍+</button>
+  <button class="btn btn-ghost btn-sm" onclick="resetZoom()">↺</button>
+  <button class="btn btn-primary" onclick="exportPDF()">⬇ Export PDF</button>
+</div>
+
+</div><!-- end form-panel -->
+
+<!-- ===== RIGHT PANEL ===== -->
+<div class="preview-panel">
+  <div id="cv-wrapper"></div>
+</div>
+
+</div>
+
+<script>
+(function(){
+
+let state={
+  photo:null,
+  zoom:0.85,
+  template:"modern",
+  experiences:[],
+  educations:[],
+  languages:[],
+  certs:[],
+  skills:[]
+};
+
+// ---- TABS ----
+window.switchTab=function(tab){
+  document.querySelectorAll('.tab-section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+tab).classList.add('active');
+  event.target.classList.add('active');
+};
+
+// ---- TEMPLATE ----
+window.selectTemplate=function(tmpl, el){
+  state.template=tmpl;
+  document.querySelectorAll('.template-card').forEach(c=>c.classList.remove('selected'));
+  el.classList.add('selected');
+  liveUpdate();
+};
+
+// ---- PHOTO ----
+document.getElementById('fotoInput').addEventListener('change',e=>{
+  const file=e.target.files[0];
+  if(!file) return;
+  const reader=new FileReader();
+  reader.onload=ev=>{
+    state.photo=ev.target.result;
+    document.getElementById('photoPreview').innerHTML=`<img src="${state.photo}">`;
+    liveUpdate();
+  };
+  reader.readAsDataURL(file);
+});
+
+// ---- EXPERIENCE ----
+window.addExperience=function(){
+  state.experiences.push({year:'',company:'',detail:''});
+  renderExperienceForm();
+  liveUpdate();
+};
+window.removeExp=function(i){
+  state.experiences.splice(i,1);
+  renderExperienceForm();
+  liveUpdate();
+};
+window.updateExp=function(i,key,val){
+  state.experiences[i][key]=val;
+  liveUpdate();
+};
+
+function renderExperienceForm(){
+  const c=document.getElementById('experience-list');
+  c.innerHTML='';
+  state.experiences.forEach((exp,i)=>{
+    c.innerHTML+=`
+    <div class="item-card">
+      <div class="item-card-header">
+        <span class="item-card-title">Pengalaman ${i+1}</span>
+        <button class="btn btn-danger btn-sm" onclick="removeExp(${i})">✕ Hapus</button>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Tahun Kerja</label>
+        <input type="text" placeholder="2021 - 2024 / 2022 - Sekarang" value="${exp.year||''}" oninput="updateExp(${i},'year',this.value)">
+      </div>
+      <div class="field-group">
+        <label class="field-label">Nama Perusahaan & Posisi</label>
+        <input type="text" placeholder="Software Engineer @ PT. ABC" value="${exp.company||''}" oninput="updateExp(${i},'company',this.value)">
+      </div>
+      <div class="field-group">
+        <label class="field-label">Detail Pekerjaan</label>
+        <textarea placeholder="Jelaskan tanggung jawab & pencapaian..." oninput="updateExp(${i},'detail',this.value)">${exp.detail||''}</textarea>
+      </div>
+    </div>`;
+  });
+}
+
+// ---- EDUCATION ----
+window.addEducation=function(){
+  state.educations.push({degree:'',school:'',year:''});
+  renderEducationForm();
+  liveUpdate();
+};
+window.removeEdu=function(i){
+  state.educations.splice(i,1);
+  renderEducationForm();
+  liveUpdate();
+};
+window.updateEdu=function(i,key,val){
+  state.educations[i][key]=val;
+  liveUpdate();
+};
+
+function renderEducationForm(){
+  const c=document.getElementById('education-list');
+  c.innerHTML='';
+  state.educations.forEach((edu,i)=>{
+    c.innerHTML+=`
+    <div class="item-card">
+      <div class="item-card-header">
+        <span class="item-card-title">Pendidikan ${i+1}</span>
+        <button class="btn btn-danger btn-sm" onclick="removeEdu(${i})">✕ Hapus</button>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Gelar / Jurusan</label>
+        <input type="text" placeholder="S1 Teknik Informatika" value="${edu.degree||''}" oninput="updateEdu(${i},'degree',this.value)">
+      </div>
+      <div class="field-group">
+        <label class="field-label">Nama Sekolah / Universitas</label>
+        <input type="text" placeholder="Universitas Indonesia" value="${edu.school||''}" oninput="updateEdu(${i},'school',this.value)">
+      </div>
+      <div class="field-group">
+        <label class="field-label">Tahun</label>
+        <input type="text" placeholder="2018 - 2022" value="${edu.year||''}" oninput="updateEdu(${i},'year',this.value)">
+      </div>
+    </div>`;
+  });
+}
+
+// ---- LANGUAGE ----
+window.addLanguage=function(){
+  state.languages.push({lang:'',level:''});
+  renderLanguageForm();
+  liveUpdate();
+};
+window.removeLang=function(i){
+  state.languages.splice(i,1);
+  renderLanguageForm();
+  liveUpdate();
+};
+window.updateLang=function(i,key,val){
+  state.languages[i][key]=val;
+  liveUpdate();
+};
+
+function renderLanguageForm(){
+  const c=document.getElementById('language-list');
+  c.innerHTML='';
+  state.languages.forEach((l,i)=>{
+    c.innerHTML+=`
+    <div class="item-card">
+      <div class="item-card-header">
+        <span class="item-card-title">Bahasa ${i+1}</span>
+        <button class="btn btn-danger btn-sm" onclick="removeLang(${i})">✕</button>
+      </div>
+      <div class="row-2">
+        <div class="field-group">
+          <label class="field-label">Bahasa</label>
+          <input type="text" placeholder="Bahasa Indonesia" value="${l.lang||''}" oninput="updateLang(${i},'lang',this.value)">
+        </div>
+        <div class="field-group">
+          <label class="field-label">Level</label>
+          <select onchange="updateLang(${i},'level',this.value)">
+            <option value="">Pilih</option>
+            <option value="Native" ${l.level==='Native'?'selected':''}>Native</option>
+            <option value="Profesional" ${l.level==='Profesional'?'selected':''}>Profesional</option>
+            <option value="Menengah" ${l.level==='Menengah'?'selected':''}>Menengah</option>
+            <option value="Dasar" ${l.level==='Dasar'?'selected':''}>Dasar</option>
+          </select>
+        </div>
+      </div>
+    </div>`;
+  });
+}
+
+// ---- CERT ----
+window.addCert=function(){
+  state.certs.push({name:'',issuer:'',year:''});
+  renderCertForm();
+  liveUpdate();
+};
+window.removeCert=function(i){
+  state.certs.splice(i,1);
+  renderCertForm();
+  liveUpdate();
+};
+window.updateCert=function(i,key,val){
+  state.certs[i][key]=val;
+  liveUpdate();
+};
+
+function renderCertForm(){
+  const c=document.getElementById('cert-list');
+  c.innerHTML='';
+  state.certs.forEach((cert,i)=>{
+    c.innerHTML+=`
+    <div class="item-card">
+      <div class="item-card-header">
+        <span class="item-card-title">Sertifikasi ${i+1}</span>
+        <button class="btn btn-danger btn-sm" onclick="removeCert(${i})">✕</button>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Nama Sertifikasi</label>
+        <input type="text" placeholder="AWS Cloud Practitioner" value="${cert.name||''}" oninput="updateCert(${i},'name',this.value)">
+      </div>
+      <div class="row-2">
+        <div class="field-group">
+          <label class="field-label">Penerbit</label>
+          <input type="text" placeholder="Amazon" value="${cert.issuer||''}" oninput="updateCert(${i},'issuer',this.value)">
+        </div>
+        <div class="field-group">
+          <label class="field-label">Tahun</label>
+          <input type="text" placeholder="2023" value="${cert.year||''}" oninput="updateCert(${i},'year',this.value)">
+        </div>
+      </div>
+    </div>`;
+  });
+}
+
+// ---- SKILLS ----
+window.addSkill=function(){
+  const input=document.getElementById('skillInput');
+  const val=input.value.trim();
+  if(!val) return;
+  state.skills.push(val);
+  input.value='';
+  renderSkillTags();
+  liveUpdate();
+};
+window.removeSkill=function(i){
+  state.skills.splice(i,1);
+  renderSkillTags();
+  liveUpdate();
+};
+
+function renderSkillTags(){
+  const c=document.getElementById('skill-tags');
+  c.innerHTML=state.skills.map((s,i)=>`
+    <span class="skill-badge">${s}<span class="del-skill" onclick="removeSkill(${i})">×</span></span>
+  `).join('');
+}
+
+// ---- PREVIEW ----
+function liveUpdate(){
+  updatePreview();
+  updateProgress();
+}
+
+function getVal(id){
+  const el=document.getElementById(id);
+  return el?el.value.trim():'';
+}
+
+function formatTglLahir(val){
+  if(!val) return '';
+  const d=new Date(val);
+  return d.toLocaleDateString('id-ID',{day:'numeric',month:'long',year:'numeric'});
+}
+
+function photoHTML(cls){
+  return state.photo?`<div class="${cls}"><img src="${state.photo}"></div>`:`<div class="${cls}" style="background:#e2e8f0;display:flex;align-items:center;justify-content:center;font-size:28px;">👤</div>`;
+}
+
+function expListHTML(style){
+  return state.experiences.map(e=>{
+    const parts=e.company.split('@').map(s=>s.trim());
+    const title=parts.length>1?parts[0]:'';
+    const company=parts.length>1?parts[1]:parts[0];
+    if(style==='modern'||style==='professional')
+      return `<div class="exp-block"><div class="exp-year">${e.year||''}</div><div class="exp-title">${title||e.company||''}</div><div class="exp-company">${title?company:''}</div><div class="exp-detail">${e.detail||''}</div></div>`;
+    if(style==='formal')
+      return `<div class="exp-block"><div class="exp-header"><div class="exp-title">${title||e.company||''}</div><div class="exp-year">${e.year||''}</div></div><div class="exp-company">${title?company:''}</div><div class="exp-detail">${e.detail||''}</div></div>`;
+    if(style==='classic')
+      return `<div class="exp-block"><div class="exp-title">${title||e.company||''}</div><span class="exp-year">${e.year||''}</span><div class="exp-company">${title?company:''}</div><div class="exp-detail">${e.detail||''}</div></div>`;
+    if(style==='minimal')
+      return `<div class="exp-block"><div class="exp-year-col">${e.year||''}</div><div><div class="exp-title">${title||e.company||''}</div><div class="exp-company">${title?company:''}</div><div class="exp-detail">${e.detail||''}</div></div></div>`;
+    if(style==='creative')
+      return `<div class="exp-block"><span class="exp-badge">${e.year||''}</span><div class="exp-title">${title||e.company||''}</div><div class="exp-company">${title?company:''}</div><div class="exp-detail">${e.detail||''}</div></div>`;
+    if(style==='executive')
+      return `<div class="exp-block"><div class="exp-row"><div class="exp-title">${title||e.company||''}</div><div class="exp-year">${e.year||''}</div></div><div class="exp-company">${title?company:''}</div><div class="exp-detail">${e.detail||''}</div></div>`;
+    return '';
+  }).join('');
+}
+
+function eduListHTML(style){
+  return state.educations.map(e=>{
+    if(style==='formal')
+      return `<div class="edu-block"><div><div style="font-size:13px;font-weight:700;">${e.degree||''}</div><div style="font-size:12px;color:#475569;">${e.school||''}</div></div><div style="font-size:11px;color:#94a3b8;">${e.year||''}</div></div>`;
+    return `<p style="font-size:12px;margin-bottom:6px;"><strong>${e.degree||''}</strong><br><span style="color:#64748b;">${e.school||''}</span>${e.year?` <em style="color:#94a3b8;">(${e.year})</em>`:''}`;
+  }).join('');
+}
+
+function skillsHTML(style){
+  if(!state.skills.length) return '';
+  if(style==='minimal'||style==='formal')
+    return `<div class="skill-wrap">${state.skills.map(s=>`<span class="skill-pill">${s}</span>`).join('')}</div>`;
+  if(style==='classic')
+    return state.skills.map(s=>`<div class="skill-bar-item"><div class="skill-bar-label">${s}</div><div class="skill-bar"><div class="skill-bar-fill" style="width:80%;"></div></div></div>`).join('');
+  if(style==='executive')
+    return state.skills.map(s=>`<div class="skill-item">${s}</div>`).join('');
+  return state.skills.map(s=>`<span class="skill-pill">${s}</span>`).join('');
+}
+
+function langHTML(){
+  return state.languages.map(l=>`<div class="lang-item">${l.lang}${l.level?' — <em>'+l.level+'</em>':''}</div>`).join('');
+}
+
+function certHTML(){
+  return state.certs.map(c=>`<div class="cert-item">📜 ${c.name}${c.issuer?' · '+c.issuer:''}${c.year?' ('+c.year+')':''}</div>`).join('');
+}
+
+function contactItems(nama, sep){
+  const items=[];
+  const tgl=getVal('tglLahir');
+  const em=getVal('email');
+  const tel=getVal('telepon');
+  const kota=getVal('kota');
+  const li=getVal('linkedin');
+  if(tgl) items.push('📅 '+formatTglLahir(tgl));
+  if(em) items.push('✉ '+em);
+  if(tel) items.push('📱 '+tel);
+  if(kota) items.push('📍 '+kota);
+  if(li) items.push('🔗 '+li);
+  return items.join(sep);
+}
+
+function buildTemplate(){
+  const nama=getVal('nama');
+  const posisi=getVal('posisi');
+  const ringkasan=getVal('ringkasan');
+  const tmpl=state.template;
+
+  if(tmpl==='modern'){
+    return `<div class="cv-modern">
+      <div class="cv-header">
+        ${photoHTML('cv-photo')}
+        <div>
+          <div class="cv-name">${nama||'Nama Lengkap'}</div>
+          <div class="cv-title">${posisi||'Posisi yang Dilamar'}</div>
+          <div class="cv-contact">${contactItems(nama,' &nbsp;|&nbsp; ')}</div>
+        </div>
+      </div>
+      <div class="cv-body">
+        <div class="cv-main">
+          ${ringkasan?`<div class="sec-block"><div class="sec-title">Tentang Saya</div><div class="ring-text">${ringkasan}</div></div>`:''}
+          ${state.experiences.length?`<div class="sec-block"><div class="sec-title">Pengalaman Kerja</div>${expListHTML('modern')}</div>`:''}
+          ${state.educations.length?`<div class="sec-block"><div class="sec-title">Pendidikan</div>${eduListHTML('modern')}</div>`:''}
+        </div>
+        <div class="cv-sidebar">
+          ${state.skills.length?`<div class="sidebar-sec"><div class="sidebar-label">Keahlian</div>${skillsHTML('modern')}</div>`:''}
+          ${state.languages.length?`<div class="sidebar-sec"><div class="sidebar-label">Bahasa</div>${langHTML()}</div>`:''}
+          ${state.certs.length?`<div class="sidebar-sec"><div class="sidebar-label">Sertifikasi</div>${certHTML()}</div>`:''}
+        </div>
+      </div>
+    </div>`;
+  }
+
+  if(tmpl==='formal'){
+    return `<div class="cv-formal">
+      <div class="cv-header">
+        ${state.photo?`<div class="cv-photo-wrap">${photoHTML('cv-photo')}</div>`:''}
+        <div class="cv-name">${nama||'NAMA LENGKAP'}</div>
+        <div class="cv-title">${posisi||'Posisi yang Dilamar'}</div>
+        <div class="cv-contact">${contactItems(nama,' &nbsp;·&nbsp; ')}</div>
+      </div>
+      <div class="cv-body">
+        ${ringkasan?`<div class="sec-block"><div class="sec-title">Profil</div><div class="ring-text">${ringkasan}</div></div>`:''}
+        ${state.experiences.length?`<div class="sec-block"><div class="sec-title">Pengalaman Kerja</div>${expListHTML('formal')}</div>`:''}
+        ${state.educations.length?`<div class="sec-block"><div class="sec-title">Pendidikan</div>${eduListHTML('formal')}</div>`:''}
+        ${state.skills.length?`<div class="sec-block"><div class="sec-title">Keahlian</div>${skillsHTML('formal')}</div>`:''}
+        ${state.languages.length||state.certs.length?`<div class="sec-block"><div class="info-grid">
+          ${state.languages.length?`<div><div class="sec-title">Bahasa</div>${langHTML()}</div>`:''}
+          ${state.certs.length?`<div><div class="sec-title">Sertifikasi</div>${certHTML()}</div>`:''}
+        </div></div>`:''}
+      </div>
+    </div>`;
+  }
+
+  if(tmpl==='classic'){
+    return `<div class="cv-classic">
+      <div class="cv-header">
+        ${photoHTML('cv-photo')}
+        <div>
+          <div class="cv-name">${nama||'Nama Lengkap'}</div>
+          <div class="cv-title">${posisi||'Posisi yang Dilamar'}</div>
+          <div class="cv-contact">${contactItems(nama,' | ')}</div>
+        </div>
+      </div>
+      <div class="cv-body">
+        <div class="cv-left">
+          ${state.skills.length?`<div class="sec-block"><div class="sec-title">Keahlian</div>${skillsHTML('classic')}</div>`:''}
+          ${state.languages.length?`<div class="sec-block"><div class="sec-title">Bahasa</div>${langHTML()}</div>`:''}
+          ${state.certs.length?`<div class="sec-block"><div class="sec-title">Sertifikasi</div>${certHTML()}</div>`:''}
+        </div>
+        <div class="cv-right">
+          ${ringkasan?`<div class="sec-block"><div class="sec-title">Profil</div><div class="ring-text">${ringkasan}</div></div>`:''}
+          ${state.experiences.length?`<div class="sec-block"><div class="sec-title">Pengalaman</div>${expListHTML('classic')}</div>`:''}
+          ${state.educations.length?`<div class="sec-block"><div class="sec-title">Pendidikan</div>${eduListHTML('classic')}</div>`:''}
+        </div>
+      </div>
+    </div>`;
+  }
+
+  if(tmpl==='professional'){
+    return `<div class="cv-professional">
+      <div class="cv-header">
+        <div class="cv-left-head">
+          <div class="cv-name">${nama||'Nama Lengkap'}</div>
+          <div class="cv-title">${posisi||'Posisi yang Dilamar'}</div>
+          <div class="cv-tags">${contactItems(nama,'|').split('|').filter(Boolean).map(s=>`<span class="cv-tag">${s.trim()}</span>`).join('')}</div>
+        </div>
+        ${photoHTML('cv-photo')}
+      </div>
+      <div class="cv-stripe"></div>
+      <div class="cv-body">
+        <div class="cv-main">
+          ${ringkasan?`<div class="sec-block"><div class="sec-title">Profil Profesional</div><div class="ring-text">${ringkasan}</div></div>`:''}
+          ${state.experiences.length?`<div class="sec-block"><div class="sec-title">Pengalaman Kerja</div>${expListHTML('professional')}</div>`:''}
+          ${state.educations.length?`<div class="sec-block"><div class="sec-title">Pendidikan</div>${eduListHTML('professional')}</div>`:''}
+        </div>
+        <div class="cv-sidebar">
+          ${state.skills.length?`<div class="sidebar-sec"><div class="sidebar-label">Keahlian</div>${skillsHTML('professional')}</div>`:''}
+          ${state.languages.length?`<div class="sidebar-sec"><div class="sidebar-label">Bahasa</div>${langHTML()}</div>`:''}
+          ${state.certs.length?`<div class="sidebar-sec"><div class="sidebar-label">Sertifikasi</div>${certHTML()}</div>`:''}
+        </div>
+      </div>
+    </div>`;
+  }
+
+  if(tmpl==='minimal'){
+    return `<div class="cv-minimal">
+      <div class="cv-header">
+        ${state.photo?photoHTML('cv-photo'):''}
+        <div class="cv-name">${nama||'Nama Lengkap'}</div>
+        <div class="cv-title">${posisi||'Posisi yang Dilamar'}</div>
+        <div class="cv-contact">${contactItems(nama,' · ')}</div>
+      </div>
+      <div class="cv-body">
+        ${ringkasan?`<div class="sec-block"><div class="sec-title">Tentang</div><div class="ring-text">${ringkasan}</div></div>`:''}
+        ${state.experiences.length?`<div class="sec-block"><div class="sec-title">Pengalaman</div>${expListHTML('minimal')}</div>`:''}
+        ${state.educations.length?`<div class="sec-block"><div class="sec-title">Pendidikan</div>${eduListHTML('minimal')}</div>`:''}
+        ${state.skills.length?`<div class="sec-block"><div class="sec-title">Keahlian</div>${skillsHTML('minimal')}</div>`:''}
+        ${state.languages.length||state.certs.length?`<div class="sec-block"><div class="info-row">
+          ${state.languages.length?`<div><div class="sec-title">Bahasa</div>${langHTML()}</div>`:''}
+          ${state.certs.length?`<div><div class="sec-title">Sertifikasi</div>${certHTML()}</div>`:''}
+        </div></div>`:''}
+      </div>
+    </div>`;
+  }
+
+  if(tmpl==='creative'){
+    return `<div class="cv-creative">
+      <div class="cv-header">
+        <div class="cv-top">
+          ${photoHTML('cv-photo')}
+          <div>
+            <div class="cv-name">${nama||'Nama Lengkap'}</div>
+            <div class="cv-title">${posisi||'Posisi yang Dilamar'}</div>
+          </div>
+        </div>
+        <div class="cv-contact-bar">${contactItems(nama,' &nbsp;·&nbsp; ')}</div>
+      </div>
+      <div class="cv-body">
+        <div class="cv-main">
+          ${ringkasan?`<div class="sec-block"><div class="sec-title">Tentang Saya</div><div class="ring-text">${ringkasan}</div></div>`:''}
+          ${state.experiences.length?`<div class="sec-block"><div class="sec-title">Pengalaman Kerja</div>${expListHTML('creative')}</div>`:''}
+          ${state.educations.length?`<div class="sec-block"><div class="sec-title">Pendidikan</div>${eduListHTML('creative')}</div>`:''}
+        </div>
+        <div class="cv-sidebar">
+          ${state.skills.length?`<div class="sidebar-sec"><div class="sidebar-label">Keahlian</div>${skillsHTML('creative')}</div>`:''}
+          ${state.languages.length?`<div class="sidebar-sec"><div class="sidebar-label">Bahasa</div>${langHTML()}</div>`:''}
+          ${state.certs.length?`<div class="sidebar-sec"><div class="sidebar-label">Sertifikasi</div>${certHTML()}</div>`:''}
+        </div>
+      </div>
+    </div>`;
+  }
+
+  if(tmpl==='executive'){
+    const yrs=state.experiences.length;
+    return `<div class="cv-executive">
+      <div class="cv-header">
+        <div class="cv-head-left">
+          ${photoHTML('cv-photo')}
+          <div class="cv-name">${nama||'Nama Lengkap'}</div>
+          <div class="cv-title">${posisi||'Posisi yang Dilamar'}</div>
+        </div>
+        <div class="cv-head-right">
+          <div class="ring-text">${ringkasan||'Ringkasan profil profesional Anda...'}</div>
+          <div class="cv-stats">
+            <div class="cv-stat"><div class="cv-stat-num">${yrs}</div><div class="cv-stat-label">Pengalaman</div></div>
+            <div class="cv-stat"><div class="cv-stat-num">${state.skills.length}</div><div class="cv-stat-label">Keahlian</div></div>
+            <div class="cv-stat"><div class="cv-stat-num">${state.certs.length}</div><div class="cv-stat-label">Sertifikat</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="cv-contact-strip">${contactItems(nama,' &nbsp;|&nbsp; ')}</div>
+      <div class="cv-body">
+        <div class="cv-left">
+          ${state.skills.length?`<div class="sec-block"><div class="sec-title">Keahlian</div>${skillsHTML('executive')}</div>`:''}
+          ${state.languages.length?`<div class="sec-block"><div class="sec-title">Bahasa</div>${langHTML()}</div>`:''}
+          ${state.certs.length?`<div class="sec-block"><div class="sec-title">Sertifikasi</div>${certHTML()}</div>`:''}
+        </div>
+        <div class="cv-right">
+          ${state.experiences.length?`<div class="sec-block"><div class="sec-title">Pengalaman Kerja</div>${expListHTML('executive')}</div>`:''}
+          ${state.educations.length?`<div class="sec-block"><div class="sec-title">Pendidikan</div>${eduListHTML('executive')}</div>`:''}
+        </div>
+      </div>
+    </div>`;
+  }
+
+  return '';
+}
+
+function updatePreview(){
+  const wrapper=document.getElementById('cv-wrapper');
+  wrapper.style.transform=`scale(${state.zoom})`;
+  wrapper.style.transformOrigin='top center';
+  wrapper.innerHTML=buildTemplate();
+}
+
+function updateProgress(){
+  const fields=['nama','email','telepon','kota','posisi','ringkasan'];
+  let score=0;
+  fields.forEach(id=>{if(getVal(id)) score++;});
+  if(state.photo) score++;
+  if(state.experiences.length) score++;
+  if(state.educations.length) score++;
+  if(state.skills.length) score++;
+  const total=10;
+  const pct=Math.round((score/total)*100);
+  document.getElementById('progressBar').style.width=pct+'%';
+  document.getElementById('progressLabel').textContent=pct+'%';
+}
+
+// ---- ZOOM ----
+window.zoomIn=function(){state.zoom=Math.min(1.5,state.zoom+0.05);updatePreview();};
+window.zoomOut=function(){state.zoom=Math.max(0.4,state.zoom-0.05);updatePreview();};
+window.resetZoom=function(){state.zoom=0.85;updatePreview();};
+
+// ---- EXPORT PDF ----
+window.exportPDF=function(){
+  const wrapper=document.getElementById('cv-wrapper');
+  const origTransform=wrapper.style.transform;
+  wrapper.style.transform='scale(1)';
+  html2pdf().set({
+    margin:0,
+    filename:'CV-'+( getVal('nama')||'Saya')+'.pdf',
+    image:{type:'jpeg',quality:0.98},
+    html2canvas:{scale:2,useCORS:true},
+    jsPDF:{unit:'mm',format:'a4',orientation:'portrait'}
+  }).from(wrapper).save().then(()=>{
+    wrapper.style.transform=origTransform;
+  });
+};
+
+// ---- INIT ----
+renderExperienceForm();
+renderEducationForm();
+renderLanguageForm();
+renderCertForm();
+renderSkillTags();
+updatePreview();
+updateProgress();
+
+})();
+</script>
+</body>
+</html>
